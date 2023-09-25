@@ -4,6 +4,7 @@ import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
+import { Button } from '@mui/material';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -47,6 +48,21 @@ function App() {
                 </Grid>
             )}
           </Grid>
+          <a
+          className="App-link"
+          href="https://reactjs.org"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Learn React
+        </a>
+        <Button
+  onClick={() => {
+    window.open('https://reactjs.org', '_blank');
+  }}
+>
+  Click me
+</Button>
     </Box>
   );
 }
