@@ -58,7 +58,7 @@ function App() {
         </a>
         <Button
   onClick={() => {
-    Android.onClicked();
+    // Android.onClicked();
     // window.open('https://reactjs.org', '_blank');
   }}
 >
