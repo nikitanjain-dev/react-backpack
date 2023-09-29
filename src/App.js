@@ -64,7 +64,7 @@ function App() {
     // window.open('https://reactjs.org', '_blank');
   }}
 >
-  Click me to call native android function
+  Click to call native android function
 </Button>
     </Box>
   );
