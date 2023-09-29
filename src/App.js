@@ -59,6 +59,8 @@ function App() {
         <Button
   onClick={() => {
     var m = window.BridgeApi?.showWelcomeScreen();
+    document.getElementById("content").innerHTML = m;
+
     console.log(m);
     // Android.onClicked();
     // window.open('https://reactjs.org', '_blank');
@@ -66,6 +68,10 @@ function App() {
 >
   Click to call native android function
 </Button>
+<div id="content">hello nikita</div>
+
+
+
     </Box>
   );
 }
