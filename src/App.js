@@ -58,10 +58,11 @@ function App() {
         </a>
         <Button
   onClick={() => {
-    window.open('https://reactjs.org', '_blank');
+    Android.onClicked();
+    // window.open('https://reactjs.org', '_blank');
   }}
 >
-  Click me
+  Click me to call native android function
 </Button>
     </Box>
   );
