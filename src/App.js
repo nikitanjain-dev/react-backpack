@@ -58,7 +58,8 @@ function App() {
         </a>
         <Button
   onClick={() => {
-    window.BridgeApi?.showWelcomeScreen();
+    var m = window.BridgeApi?.showWelcomeScreen();
+    console.log(m);
     // Android.onClicked();
     // window.open('https://reactjs.org', '_blank');
   }}
