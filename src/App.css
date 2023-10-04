@@ -36,3 +36,79 @@
     transform: rotate(360deg);
   }
 }
+
+
+.menu-bar {
+  border-radius: 60px;
+  height: 60px;
+  border: 1px solid #ccc;
+  width: 0%;
+  background-color: #ff9292;
+  position: fixed;
+  bottom: 10%;
+  left: 5%;
+  transition: 0.5s;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.menu-bar.expand {
+  width: 90%;
+}
+.basket {
+  transition: opacity 0.5s;
+  opacity: 1;
+  background-color:#61dafb;
+}
+@keyframes fadeIn {
+  0% {
+      opacity: 0;
+  }
+  100% {
+      opacity: 1;
+  }
+}
+
+.icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+  margin: 5px;
+  background-color: #313131;
+  opacity: 0;
+  /* animation: fadeIn 0.5s ease-in-out 1s; */
+}
+.icon.icon0 {
+  animation: fadeIn 0.5s ease-in-out 0.1s forwards;
+}
+
+.icon.icon1 {
+  animation: fadeIn 0.5s ease-in-out 0.1s forwards;
+}
+.icon.icon2 {
+  animation: fadeIn 0.5s ease-in-out 0.2s forwards;
+}
+.icon.icon3 {
+  animation: fadeIn 0.5s ease-in-out 0.3s forwards;
+}
+
+.bag {
+  width: 300px;
+  height: 300px;
+  background-color: red;
+  position: fixed;
+  border-radius: 100%;
+  z-index: 9;
+  transition: 0.5s;
+  left: 50%;
+  bottom: 20%;
+  transform: translate(-50%, -50%);
+  animation: fadeIn 0.5s ease-in-out 1s;
+}
+
+.bag.small {
+  width: 70px;
+  height: 70px;
+  bottom: 6%;
+  left: 10%;
+}
