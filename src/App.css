@@ -1,80 +1,111 @@
-.App {
-  text-align: center;
+.app {
+  font-family: "Roboto Italic";
+}
+.menu-bar::-webkit-scrollbar {
+  display: none;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-
-.menu-bar {
-  border-radius: 60px;
-  height: 60px;
-  border: 1px solid #ccc;
+.parent {
+  background-color: pink;
+  height: 100%;
   width: 0%;
-  background-color: #ff9292;
-  position: fixed;
-  bottom: 10%;
-  left: 5%;
-  transition: 0.5s;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  transition: 0.5s;
+  flex-direction: row;
+  border-radius: 40px;
+  /* padding-inline: 40px; */
 }
-.menu-bar.expand {
-  width: 90%;
-}
-.basket {
-  transition: opacity 0.5s;
-  opacity: 1;
-  background-color:#61dafb;
+
+.parent.expand {
+  width: auto;
+  background-color: green;
+  padding-inline: 40px;
 }
 @keyframes fadeIn {
   0% {
-      opacity: 0;
+    opacity: 0;
   }
   100% {
-      opacity: 1;
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.child {
+  opacity: 0;
+  display: flex;
+  flex-direction: row;
+}
+
+.child.expand {
+  opacity: 1;
+}
+
+.menu {
+  height: 49px;
+  padding-left: 24px;
+  padding-right: 24px;
+  border-radius: 40px;
+  position: fixed;
+  bottom: 1%;
+  width: 0%;
+  transition: 0.5s;
+  background-color: aqua;
+}
+
+.menu .expand {
+  width: 100%;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.bar {
+  background-color: #ffffffcc;
+  position: fixed;
+  bottom: 10%;
+  width: 0%;
+
+  left: 8vw;
+  border-radius: 40px;
+  display: flex;
+  transition: 0.5s;
+}
+
+.bar.expand {
+  width: 84vw;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }
 
 .icon {
-  width: 50px;
-  height: 50px;
-  border-radius: 50px;
-  margin: 5px;
-  background-color: #313131;
+  /* width: 50px;
+  height: 50px; */
+  /* border-radius: 50px; */
+  /* margin: 5px; */
+  background-color: #ffffffcc;
   opacity: 0;
   /* animation: fadeIn 0.5s ease-in-out 1s; */
 }
@@ -91,24 +122,55 @@
 .icon.icon3 {
   animation: fadeIn 0.5s ease-in-out 0.3s forwards;
 }
-
-.bag {
-  width: 300px;
-  height: 300px;
-  background-color: red;
-  position: fixed;
-  border-radius: 100%;
-  z-index: 9;
-  transition: 0.5s;
-  left: 50%;
-  bottom: 20%;
-  transform: translate(-50%, -50%);
-  animation: fadeIn 0.5s ease-in-out 1s;
+.icon.icon4 {
+  animation: fadeIn 0.5s ease-in-out 0.4s forwards;
+}
+.icon.icon5 {
+  animation: fadeIn 0.5s ease-in-out 0.5s forwards;
 }
 
-.bag.small {
-  width: 70px;
-  height: 70px;
-  bottom: 6%;
-  left: 10%;
+.hello {
+  display: fixed;
+  top: 0;
+  left: 0;
+  transform: translate(calc(50vw - 50%), calc(50vh - 50%));
+}
+
+.App {
+  font-family: sans-serif;
+  text-align: center;
+  width: "80vw";
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+ul {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  max-width: 100%;
+  overflow-x: scroll;
+  scroll-behavior: smooth;
+  &::-webkit-scrollbar {
+    /* make scrollbar transparent */
+    -webkit-appearance: none;
+    width: 0;
+    height: 0;
+  }
+}
+li {
+  background: #ff61f6;
+  color: #fff;
+  padding: 8px;
+  border-radius: 4px;
+  margin: 0 4px;
+  white-space: nowrap;
+}
+button {
+  border: 0;
+  color: #777;
+  font-size: 24px;
+  margin: 0 8px;
 }

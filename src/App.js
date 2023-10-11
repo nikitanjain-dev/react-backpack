@@ -1,147 +1,29 @@
-import logo from "./logo.svg";
+import React, { useRef, useState } from "react";
+import { Box, Typography, Button, Avatar } from "@mui/material";
+import SwipeableViews from "react-swipeable-views-react-18-fix";
 import "./App.css";
-import { styled } from "@mui/material/styles";
-import * as React from "react";
-import { Box, Container } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
-import MobileStepper from "@mui/material/MobileStepper";
-import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
-import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
-import SwipeableViews from "react-swipeable-views";
-import { red } from "@mui/material/colors";
-import Stepper from "@mui/material/Stepper";
-import Step from "@mui/material/Step";
-import StepLabel from "@mui/material/StepLabel";
-import StepButton from "@mui/material/StepButton";
-import PedalBikeIcon from "@mui/icons-material/PedalBike";
+import { colors } from "./settings/theme.js";
+import { SWIPER_DATA } from "./settings/constant.js";
+import myData from "./fruits.json";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import { IconButton } from "@mui/material";
 
+import right_arrow from "./assets/images/right_arrow.png";
 
-const steps = [
-  "Select master blaster campaign settings",
-  "Create an ad group",
-  "Create an ad",
-];
-
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: "center",
-  color: theme.palette.text.secondary,
-}));
-
-// function CustomTabPanel(props) {
-//   const { children, value, index, ...other } = props;
-
-//   return (
-//     <div
-//     style={{backgroundColor:'red', flexGrow:1, height:'100%' }}
-//       role="tabpanel"
-//       hidden={value !== index}
-//       id={`simple-tabpanel-${index}`}
-//       aria-labelledby={`simple-tab-${index}`}
-//       {...other}
-
-//     >
-//       {value === index && (
-//         <Box sx={{ p: 3, color: red, backgroundColor:red }}>
-//           <Typography>{children}</Typography>
-//         </Box>
-//       )}
-//     </div>
-//   );
-// }
-
-// CustomTabPanel.propTypes = {
-//   children: PropTypes.node,
-//   index: PropTypes.number.isRequired,
-//   value: PropTypes.number.isRequired,
-// };
-
-// function a11yProps(index) {
-//   return {
-//     id: `simple-tab-${index}`,
-//     'aria-controls': `simple-tabpanel-${index}`,
-//   };
-// }
-
-const images = [
-  {
-    label: "Score extras for school & life",
-    subTitle:
-      "Get free perks from DoorDash, Calm and Prezi with your Chegg study subscription",
-    imgPath:
-      "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
-    color: "pink",
+const styles = {
+  container: {
+    height: "100vh",
+    display: "flex",
+    flexDirection: "column",
+    placeItems: "center",
   },
-  {
-    label: "Bird",
-    subTitle:
-      "Get free perks from DoorDash, Calm and Prezi with your Chegg study subscription",
-    imgPath:
-      "https://images.unsplash.com/photo-1538032746644-0212e812a9e7?auto=format&fit=crop&w=400&h=250&q=60",
-    color: "grey",
-  },
-  {
-    label: "Bali, Indonesia",
-    subTitle:
-      "Get free perks from DoorDash, Calm and Prezi with your Chegg study subscription",
-    imgPath:
-      "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=400&h=250",
-    color: "azure",
-  },
-  {
-    label: "Goč, Serbia",
-    subTitle:
-      "Get free perks from DoorDash, Calm and Prezi with your Chegg study subscription",
-    imgPath:
-      "https://images.unsplash.com/photo-1512341689857-198e7e2f3ca8?auto=format&fit=crop&w=400&h=250&q=60",
-    color: "floralwhite",
-  },
-];
+};
 
 function App() {
-  let roomData = [
-    { name: "Advisory Board", id: 1, type: 0 },
-    { name: "Audit", id: 2, type: 1 },
-    { name: "Communication", id: 3, type: 1 },
-    { name: "Digital", id: 4, type: 1 },
-    { name: "Finance", id: 5, type: 1 },
-    { name: "Financial Expert", id: 6, type: 1 },
-    { name: "Human Ressources", id: 7, type: 1 },
-    { name: "IT", id: 8, type: 1 },
-    { name: "Legal", id: 9, type: 1 },
-    { name: "Marketing", id: 10, type: 1 },
-    { name: "Operations", id: 11, type: 1 },
-    { name: "Relationship Management", id: 12, type: 1 },
-    { name: "Representation of Employees", id: 13, type: 1 },
-    { name: "Risk & Compliance", id: 14, type: 1 },
-    { name: "Sustainability", id: 15, type: 1 },
-  ];
-
-  const [value, setValue] = React.useState(0);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
-  const theme = useTheme();
-  const [activeStep, setActiveStep] = React.useState(0);
-  const maxSteps = images.length;
-
-  const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  };
-
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
+  const [activeStep, setActiveStep] = useState(0);
 
   const handleStepChange = (step) => {
-    console.log(step);
     setActiveStep(step);
   };
 
@@ -149,188 +31,317 @@ function App() {
     return activeStep === 0 ? "menu-bar" : "menu-bar expand";
   };
 
-  const _checkIconThirdClass = () => {
-    return activeStep === 0 ? "icon" : "icon third";
+  const checkClassName = () => {
+    return activeStep === 0 ? "menu" : "menu expand";
   };
 
-
-  const _checkIconSecondClass = () => {
-    return activeStep === 0 ? "icon" : "icon second";
-  };
   const _checkIconFirstClass = (index) => {
     return activeStep === 0 ? "icon" : `icon icon${index}`;
   };
 
-  const _checkABagClass = () => {
-    return activeStep ===  0 ? "bag" : "bag small";
+  const checkParenttClass = () => {
+    return activeStep === 0 ? "parent" : "parent expand";
   };
 
-  React.useEffect(() => {
-    if(activeStep !== 1) {
+  const checkChildClass = () => {
+    return activeStep === 0 ? "child" : `child expand`;
+  };
 
+  const calculateBarHeight = () => {
+    return activeStep === 0 ? "bar" : `bar expand`;
+  };
+  let scrl = useRef(null);
+  const [scrollX, setscrollX] = useState(0);
+  const [scrolEnd, setscrolEnd] = useState(false);
+
+  //Slide click
+  const slide = (shift) => {
+    scrl.current.scrollLeft += shift;
+    setscrollX(scrollX + shift);
+
+    if (
+      Math.floor(scrl.current.scrollWidth - scrl.current.scrollLeft) <=
+      scrl.current.offsetWidth
+    ) {
+      setscrolEnd(true);
     } else {
-
+      setscrolEnd(false);
     }
-  }, [activeStep]);
+  };
 
+  //Anim
+  // const anim = (e) => {
+  //   gsap.from(e.target, { scale: 1 });
+  //   gsap.to(e.target, { scale: 1.5 });
+  // };
+  // const anim2 = (e) => {
+  //   gsap.from(e.target, { scale: 1.5 });
+  //   gsap.to(e.target, { scale: 1 });
+  // };
+
+  const scrollCheck = () => {
+    console.log(scrl.current.scrollLeft, scrl.current.scrollWidth);
+    setscrollX(scrl.current.scrollLeft);
+    if (
+      Math.floor(scrl.current.scrollWidth - scrl.current.scrollLeft) <=
+      scrl.current.offsetWidth
+    ) {
+      setscrolEnd(true);
+    } else {
+      setscrolEnd(false);
+    }
+  };
   return (
-    <Container
-      maxWidth={false}
-      disableGutters
-      sx={{ backgroundColor: "red", height: "100vh" }}
-    >
-          {/* <FadeIn>
-        <div>Element 1</div>
-        <div>Element 2</div>
-        <div>Element 3</div>
-        <div>Element 4</div>
-        <div>Element 5</div>
-        <div>Element 6</div>
-      </FadeIn>
-      <div className="basket">
-        <button className="basketBtn">{"Close"}</button>
-        <div>kndf</div>
-
-      </div> */}
-      <Box component="img" className={_checkABagClass()} src={'https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=400&h=250'}></Box>
-      <SwipeableViews
-        axis={theme.direction === "rtl" ? "x-reverse" : "x"}
-        index={activeStep}
-        onChangeIndex={handleStepChange}
-        enableMouseEvents
-      >
-        {images.map((step, index) => (
-          <div key={step.label}>
-            {Math.abs(activeStep - index) <= 2 ? (
+    <>
+      <SwipeableViews index={activeStep} onChangeIndex={handleStepChange}>
+        {SWIPER_DATA.map((data, index) => (
+          <Box
+            sx={[
+              styles.container,
+              {
+                background: data.color,
+              },
+            ]}
+          >
+            {index == 0 ? (
               <Box
                 sx={{
-                  backgroundColor: step.color,
-                  pl: 5,
-                  pr: 5,
+                  height: "100%",
+                  pt: "80px",
+                  pl: "24px",
+                  pr: "24px",
                   display: "flex",
                   flexDirection: "column",
                   alignItems: "center",
-                  alignSelf: "center",
-                  justifySelf: "center",
-                  height: "100vh",
                 }}
               >
-                <Typography variant="h5">{step.label}</Typography>
-
-                <Typography variant="h6" sx={{ pt: 5 }}>
-                  {step.subTitle}
-                </Typography>
                 <Box
-                  mt={3}
-                  position="absolute"
-                  bottom="0px"
-                  sx={{ width: "50%", backgroundColor: "red" }}
+                  sx={{
+                    mt: "16px",
+                    display: "flex",
+                    flexDirection: "column",
+                    width: "247px",
+                  }}
                 >
-                  <Stepper
-                    nonLinear
-                    activeStep={activeStep}
-                    connector={false}
-                  ></Stepper>
+                  <Typography
+                    sx={{
+                      fontSize: "48px",
+                      color: data.darkTheme ? colors.white : colors.black,
+                      fontWeight: "900",
+                      fontFamily: "Roboto Regular",
+                      lineHeight: "44px",
+                      // alignSelf: "center",
+                      // placeSelf: "center",
+                      // justifySelf: "center",
+                    }}
+                  >
+                    {"YOUR BACKPACK"}
+                  </Typography>
+                  <Box
+                    component="img"
+                    alt="Logo"
+                    sx={{ width: "152px", alignSelf: "end" }}
+                    src={require(`./assets/images/${data?.logoName}`)}
+                  />
+                  <Box
+                    component="img"
+                    alt="Image"
+                    sx={{ mt: "32px" }}
+                    src={require(`./assets/images/${data?.imgName}`)}
+                  />
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "row",
+                      textAlign: "center",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      mt: "52px",
+                    }}
+                  >
+                    <Typography
+                      sx={{
+                        fontSize: "17px",
+                        color: colors.black,
+                        fontWeight: "700",
+                        fontFamily: "Roboto Regular",
+                        mr: "8px",
+                      }}
+                    >
+                      {data?.buttonTitle}
+                    </Typography>
+                    <Box
+                      component="img"
+                      alt="Logo"
+                      src={require(`./assets/images/right_arrow.png`)}
+                    />
+                  </Box>
                 </Box>
               </Box>
-            ) : null}
-          </div>
+            ) : (
+              <Box
+                sx={{
+                  height: "100%",
+                  pt: "80px",
+                  pl: "24px",
+                  pr: "24px",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
+                <Box
+                  component="img"
+                  alt="Logo"
+                  src={require(`./assets/images/${data?.logoName}`)}
+                />
+                <Box
+                  sx={{
+                    display: "flex",
+                    textAlign: "center",
+                    mt: "16px",
+                  }}
+                >
+                  <Typography
+                    sx={{
+                      fontSize: "32px",
+                      color: data.darkTheme ? colors.white : colors.black,
+                      fontWeight: "600",
+                      fontFamily: "Roboto Regular",
+                    }}
+                  >
+                    {data?.title}
+                  </Typography>
+                </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    textAlign: "center",
+                    mt: "16px",
+                  }}
+                >
+                  <Typography
+                    sx={{
+                      fontSize: "16px",
+                      color: data.darkTheme ? colors.white : colors.black,
+                      fontWeight: "400",
+                      fontFamily: "Roboto Regular",
+                    }}
+                  >
+                    {data?.subTitle}
+                  </Typography>
+                </Box>
+                <Box
+                  component="img"
+                  alt="Image"
+                  sx={{ mt: "32px" }}
+                  src={require(`./assets/images/${data?.imgName}`)}
+                />
+                <Button
+                  sx={{
+                    mt: "32px",
+                    backgroundColor: data.darkTheme
+                      ? colors.white
+                      : colors.black,
+                    pt: "16px",
+                    pb: "16px",
+                    width: "228px",
+                    borderRadius: "40px",
+                    color: data.darkTheme ? colors.black : colors.white,
+                    fontSize: "17px",
+                    fontWeight: "700",
+                    fontFamily: "Roboto Regular",
+                  }}
+                  variant="outlined"
+                >
+                  {data?.buttonTitle}
+                </Button>
+              </Box>
+            )}
+
+            <Box>kdjns</Box>
+          </Box>
         ))}
       </SwipeableViews>
-  
-      
-        <div className={_checkActiveBtn()} >
-        {images.map((step, index) => (
-          <Box className={_checkIconFirstClass(index)} onClick={() => handleStepChange(index)}></Box>
-          ))}
-          {/* <div className={_checkIconSecondClass()}></div>
-          <div className={_checkIconThirdClass()}></div>
-          
-          <div class="icon"></div>
-          <div class="icon"></div>
-          <div class="icon"></div>
-          <div class="icon"></div>
-          <div class="icon"></div> */}
+
+      <div className={calculateBarHeight()}>
+        <div
+          style={{
+            width: "7vw",
+            display: "flex",
+            alignItems: "center",
+            // justifyContent: "center",
+            opacity: activeStep == 0 ? 0 : 1,
+          }}
+        >
+          {scrollX !== 0 && (
+            <IconButton name="details" onClick={() => slide(-60)}>
+              <ArrowBackIosIcon />
+            </IconButton>
+          )}
         </div>
 
-        <Stepper nonLinear activeStep={activeStep} connector={false} >
-        {images.map((step, index) => (
-          <Step key={step.label}>
-            
-            <StepButton
-            icon={<PedalBikeIcon />}
-            onClick={() => handleStepChange(index)}
-          />
+        <div
+          ref={scrl}
+          onScroll={scrollCheck}
+          className="menu-bar"
+          style={{
+            width: "70vw",
 
-     <StepButton
-            icon={<PedalBikeIcon />}
-            onClick={() => handleStepChange(index)}
-          />
-
-          </Step>
-        ))}
-      </Stepper>
-    
-
-      {/* <Box sx={{ maxWidth: 400, flexGrow: 1 }}>
-      <Paper
-        square
-        elevation={0}
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          height: 50,
-          pl: 2,
-          bgcolor: 'background.default',
-        }}
-      >
-        <Typography>{images[activeStep].label}</Typography>
-      </Paper>
-      <SwipeableViews
-        axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-        index={activeStep}
-        onChangeIndex={handleStepChange}
-        enableMouseEvents
-      >
-        {images.map((step, index) => (
-          <div key={step.label}>
-            {Math.abs(activeStep - index) <= 2 ? (
-         
-              <Box
-              sx={{
-                height: 400,
-                display: 'block',
-                maxWidth: 400,
-                overflow: 'hidden',
-                width: '100%',
-                backgroundColor:red,
-              }}
-            >
-              <Typography>jdskfm</Typography>
-            </Box>
-            ) : null}
-          </div>
-        ))}
-      </SwipeableViews>
-      <Stepper nonLinear activeStep={activeStep} connector={false} >
-        {images.map((step, index) => (
-          <Step key={step.label}>
-            
-            <StepButton
-            icon={<PedalBikeIcon />}
-            onClick={() => handleStepChange(index)}
-          />
-
-     <StepButton
-            icon={<PedalBikeIcon />}
-            onClick={() => handleStepChange(index)}
-          />
-
-          </Step>
-        ))}
-      </Stepper>
-    </Box> */}
-    </Container>
+            display: "flex",
+            overflowX: "auto",
+          }}
+        >
+          {SWIPER_DATA.map((data, index) =>
+            index != 0 ? (
+              <div
+                style={{
+                  minWidth: "14vw",
+                  width: "14vw",
+                  backgroundColor:
+                    activeStep == index ? colors.white80 : "transparent",
+                  border:
+                    activeStep == index
+                      ? `1px solid ${colors.lightGrey}`
+                      : null,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <Button
+                  onClick={() => {
+                    handleStepChange(index);
+                    console.log("hello");
+                  }}
+                >
+                  <Box
+                    component="img"
+                    alt="Logo"
+                    src={require(`./assets/images/${data?.iconName}`)}
+                  />
+                </Button>
+              </div>
+            ) : null
+          )}
+        </div>
+        <div
+          style={{
+            width: "7vw",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            opacity: activeStep == 0 ? 0 : 1,
+          }}
+        >
+          {!scrolEnd && (
+            <IconButton name="details" onClick={() => slide(60)}>
+              <ArrowForwardIosIcon />
+            </IconButton>
+          )}
+        </div>
+      </div>
+    </>
   );
 }
 
