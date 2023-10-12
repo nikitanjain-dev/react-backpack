@@ -12,6 +12,7 @@ import right_arrow from "./assets/images/right_arrow.png";
 
 function App() {
   let scrl = useRef(null);
+  let iconRef = useRef(null);
   const [scrollX, setscrollX] = useState(0);
   const [scrolEnd, setscrolEnd] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
@@ -43,7 +44,6 @@ function App() {
   };
 
   const scrollCheck = () => {
-    console.log(scrl.current.scrollLeft, scrl.current.scrollWidth);
     setscrollX(scrl.current.scrollLeft);
     if (
       Math.floor(scrl.current.scrollWidth - scrl.current.scrollLeft) <=
@@ -104,15 +104,7 @@ function App() {
                 </Box>
               </Box>
             ) : (
-              <Box
-                sx={[
-                  styles.subcontainerWithMenu,
-                  {
-                    // background: "pink",
-                    pb: "20vh",
-                  },
-                ]}
-              >
+              <Box sx={[styles.subcontainerWithMenu]}>
                 <Box
                   component="img"
                   alt="Logo"
@@ -154,9 +146,15 @@ function App() {
                         ? colors.white
                         : colors.black,
                       color: data.darkTheme ? colors.black : colors.white,
+                      ":hover": {
+                        backgroundColor: data.darkTheme
+                          ? colors.white
+                          : colors.black,
+                        color: data.darkTheme ? colors.black : colors.white,
+                      },
                     },
                   ]}
-                  variant="outlined"
+                  // variant="outlined"
                 >
                   {data?.buttonTitle}
                 </Button>
@@ -176,9 +174,14 @@ function App() {
           ]}
         >
           {scrollX !== 0 && (
-            <IconButton name="details" onClick={() => slide(-60)}>
-              <ArrowBackIosIcon />
-            </IconButton>
+            <Box
+              component="img"
+              alt="Icon"
+              src={require(`./assets/images/caret_left.png`)}
+              onClick={() => {
+                slide(-iconRef.current.getBoundingClientRect().width);
+              }}
+            />
           )}
         </Box>
         <div
@@ -190,6 +193,7 @@ function App() {
           {SWIPER_DATA.map((data, index) =>
             index != 0 ? (
               <Box
+                ref={iconRef}
                 className={_checkIconFirstClass(index)}
                 sx={[
                   styles.menuIconContainer,
@@ -203,26 +207,29 @@ function App() {
                   },
                 ]}
               >
-                <Button
+                <Box
+                  component="img"
+                  alt="Icon"
+                  sx={{ width: "32px", height: "32px" }}
+                  src={require(`./assets/images/${data?.iconName}`)}
                   onClick={() => {
                     handleStepChange(index);
                   }}
-                >
-                  <Box
-                    component="img"
-                    alt="Logo"
-                    src={require(`./assets/images/${data?.iconName}`)}
-                  />
-                </Button>
+                />
               </Box>
             ) : null
           )}
         </div>
         <Box sx={[styles.nextArrow, { opacity: activeStep == 0 ? 0 : 1 }]}>
           {!scrolEnd && (
-            <IconButton name="details" onClick={() => slide(60)}>
-              <ArrowForwardIosIcon />
-            </IconButton>
+            <Box
+              component="img"
+              alt="Icon"
+              src={require(`./assets/images/caret_right.png`)}
+              onClick={() => {
+                slide(iconRef.current.getBoundingClientRect().width);
+              }}
+            />
           )}
         </Box>
       </div>
@@ -249,6 +256,7 @@ const styles = {
     // pt: "80px",
     pl: "24px",
     pr: "24px",
+    pb: "20vh",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -257,6 +265,8 @@ const styles = {
     display: "flex",
     textAlign: "center",
     mt: "3vh",
+    pl: "8px",
+    pr: "8px",
   },
   title: {
     fontSize: "32px",
@@ -268,7 +278,9 @@ const styles = {
     display: "flex",
     textAlign: "center",
     // mt: "16px",
-    mt: "2vh",
+    mt: "1vh",
+    pl: "8px",
+    pr: "8px",
   },
   subtitle: {
     fontSize: "16px",
@@ -276,18 +288,20 @@ const styles = {
     fontFamily: "Roboto Regular",
     lineHeight: "24px",
   },
-  image: { mt: "3vh" },
+  image: { mt: "3vh", pl: "16px", pr: "16px" },
   // image: { mt: "32px" },
   button: {
-    mt: "4vh",
+    mt: "3vh",
     // mt: "32px",
     pt: "16px",
     pb: "16px",
-    width: "228px",
+    minWidth: "60vw",
     borderRadius: "40px",
     fontSize: "17px",
     fontWeight: "700",
+    lineHeight: "24px",
     fontFamily: "Roboto Regular",
+    letterSpacing: "1.7px",
   },
   prevArrrow: {
     width: "7vw",
@@ -310,6 +324,7 @@ const styles = {
     width: "7vw",
     display: "flex",
     justifyContent: "center",
+    alignItems: "center",
   },
   introContainer: {
     height: "100%",
