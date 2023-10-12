@@ -10,16 +10,3 @@ export const colors = {
   lightGrey: "#E1E6EF",
   white80: "#ffffffcc",
 };
-
-export const strings = {
-  your: "YOUR",
-  backpack: "BACKPACK",
-  swipeForDeals: "Swipe for deals",
-  scoreExtra: "Score extras for school & life",
-  getFreePerrks:
-    "Get free perks from DoorDash, Calm, and Prezi with Chegg Study",
-  hitTheBook: "HIT THE BOOKS",
-  lotOfChange: "$1,000 a month is a lot of change",
-  scholarship: "Apply to exclusive scholarships just for the Zeemee community",
-  kaChing: "KA-Ching",
-};
