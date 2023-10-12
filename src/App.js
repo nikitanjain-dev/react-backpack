@@ -4,15 +4,10 @@ import SwipeableViews from "react-swipeable-views-react-18-fix";
 import "./App.css";
 import { colors } from "./settings/theme.js";
 import { SWIPER_DATA } from "./settings/constant.js";
-import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import { IconButton } from "@mui/material";
-
-import right_arrow from "./assets/images/right_arrow.png";
 
 function App() {
-  let scrl = useRef(null);
-  let iconRef = useRef(null);
+  let scrollRef = useRef(null);
+  let menuIconRef = useRef(null);
   const [scrollX, setscrollX] = useState(0);
   const [scrolEnd, setscrolEnd] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
@@ -30,12 +25,12 @@ function App() {
   };
 
   const slide = (shift) => {
-    scrl.current.scrollLeft += shift;
+    scrollRef.current.scrollLeft += shift;
     setscrollX(scrollX + shift);
-
     if (
-      Math.floor(scrl.current.scrollWidth - scrl.current.scrollLeft) <=
-      scrl.current.offsetWidth
+      Math.floor(
+        scrollRef.current.scrollWidth - scrollRef.current.scrollLeft
+      ) <= scrollRef.current.offsetWidth
     ) {
       setscrolEnd(true);
     } else {
@@ -44,10 +39,11 @@ function App() {
   };
 
   const scrollCheck = () => {
-    setscrollX(scrl.current.scrollLeft);
+    setscrollX(scrollRef.current.scrollLeft);
     if (
-      Math.floor(scrl.current.scrollWidth - scrl.current.scrollLeft) <=
-      scrl.current.offsetWidth
+      Math.floor(
+        scrollRef.current.scrollWidth - scrollRef.current.scrollLeft
+      ) <= scrollRef.current.offsetWidth
     ) {
       setscrolEnd(true);
     } else {
@@ -70,14 +66,24 @@ function App() {
           >
             {index == 0 ? (
               <Box sx={styles.introContainer}>
-                <Box sx={styles.introTitleContainer}>
+                <Box sx={{ display: "flex", flexDirection: "column" }}>
                   <Typography
                     sx={[
                       styles.introTitle,
+
                       { color: data.darkTheme ? colors.white : colors.black },
                     ]}
                   >
-                    {"YOUR BACKPACK"}
+                    {"YOUR"}
+                  </Typography>
+                  <Typography
+                    sx={[
+                      styles.introTitle,
+
+                      { color: data.darkTheme ? colors.white : colors.black },
+                    ]}
+                  >
+                    {"BACKPACK"}
                   </Typography>
                   <Box
                     component="img"
@@ -85,22 +91,22 @@ function App() {
                     sx={styles.introLogo}
                     src={require(`./assets/images/${data?.logoName}`)}
                   />
+                </Box>
+                <Box
+                  component="img"
+                  alt="Image"
+                  sx={styles.introImage}
+                  src={require(`./assets/images/${data?.imgName}`)}
+                />
+                <Box sx={styles.introButtonContainer}>
+                  <Typography sx={styles.introButtonTitle}>
+                    {data?.buttonTitle}
+                  </Typography>
                   <Box
                     component="img"
-                    alt="Image"
-                    sx={styles.image}
-                    src={require(`./assets/images/${data?.imgName}`)}
+                    alt="RightArrow"
+                    src={require(`./assets/images/right_arrow.png`)}
                   />
-                  <Box sx={styles.introButtonContainer}>
-                    <Typography sx={styles.introButtonTitle}>
-                      {data?.buttonTitle}
-                    </Typography>
-                    <Box
-                      component="img"
-                      alt="Logo"
-                      src={require(`./assets/images/right_arrow.png`)}
-                    />
-                  </Box>
                 </Box>
               </Box>
             ) : (
@@ -179,13 +185,13 @@ function App() {
               alt="Icon"
               src={require(`./assets/images/caret_left.png`)}
               onClick={() => {
-                slide(-iconRef.current.getBoundingClientRect().width);
+                slide(-menuIconRef.current.getBoundingClientRect().width);
               }}
             />
           )}
         </Box>
         <div
-          ref={scrl}
+          ref={scrollRef}
           onScroll={scrollCheck}
           className="menu-bar"
           style={styles.menuBar}
@@ -193,7 +199,7 @@ function App() {
           {SWIPER_DATA.map((data, index) =>
             index != 0 ? (
               <Box
-                ref={iconRef}
+                ref={menuIconRef}
                 className={_checkIconFirstClass(index)}
                 sx={[
                   styles.menuIconContainer,
@@ -227,7 +233,7 @@ function App() {
               alt="Icon"
               src={require(`./assets/images/caret_right.png`)}
               onClick={() => {
-                slide(iconRef.current.getBoundingClientRect().width);
+                slide(menuIconRef.current.getBoundingClientRect().width);
               }}
             />
           )}
@@ -288,11 +294,10 @@ const styles = {
     fontFamily: "Roboto Regular",
     lineHeight: "24px",
   },
-  image: { mt: "3vh", pl: "16px", pr: "16px" },
-  // image: { mt: "32px" },
+  image: { mt: "3vh", width: "auto", maxWidth: "85vw" },
+  introImage: { mt: "3vh", width: "auto", maxWidth: "85vw" },
   button: {
     mt: "3vh",
-    // mt: "32px",
     pt: "16px",
     pb: "16px",
     minWidth: "60vw",
@@ -328,18 +333,29 @@ const styles = {
   },
   introContainer: {
     height: "100%",
-    pt: "80px",
-    pl: "24px",
-    pr: "24px",
+    // width: "100%",
+    // pt: "80px",
+    // pl: "34px",
+    // pr: "34px",
+    // pl: "0px",
+    // pr: "px",
     display: "flex",
+    // flex: 1,
     flexDirection: "column",
     alignItems: "center",
+    justifyContent: "center",
+    // justifyContent: "center",
   },
   introTitleContainer: {
-    mt: "16px",
+    backgroundColor: "green",
+    mt: "11vh",
     display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
     flexDirection: "column",
-    width: "247px",
+
+    // width: "247px",
+    // width: "70vw",
   },
   introTitle: {
     fontSize: "48px",
@@ -347,14 +363,19 @@ const styles = {
     fontFamily: "Roboto Regular",
     lineHeight: "44px",
   },
-  introLogo: { width: "152px", alignSelf: "end" },
+  introLogo: {
+    width: "152px",
+    height: "33px",
+    alignSelf: "end",
+  },
   introButtonContainer: {
     display: "flex",
     flexDirection: "row",
     textAlign: "center",
     alignItems: "center",
     justifyContent: "center",
-    mt: "52px",
+    mt: "5vh",
+    // mb: "11vh",
   },
   introButtonTitle: {
     fontSize: "17px",
@@ -362,6 +383,7 @@ const styles = {
     fontWeight: "700",
     fontFamily: "Roboto Regular",
     mr: "8px",
+    lineHeight: "24px",
   },
 };
 
