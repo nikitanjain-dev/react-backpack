@@ -156,7 +156,7 @@ function App() {
                     <Box
                       component="img"
                       alt="Logo"
-                      sx={{ width: "auto", minHeight: "5vh" }}
+                      sx={{ width: "35vw", minHeight: "auto" }}
                       src={require(`./assets/images/${data?.logoName}`)}
                     />
                     <Box sx={styles.titleContainer}>
@@ -350,7 +350,7 @@ const styles = {
     fontFamily: "Roboto Regular",
     lineHeight: "3vh",
   },
-  image: { mt: "3vh", width: "auto", maxWidth: "85vw" },
+  image: { mt: "3vh", width: "auto", maxWidth: "70vw", height: "auto" },
   introImage: { mt: "3vh", width: "auto", maxWidth: "85vw" },
   button: {
     mt: "3vh",
