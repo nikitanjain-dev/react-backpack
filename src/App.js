@@ -1,5 +1,11 @@
-import React, { useRef, useState } from "react";
-import { Box, Typography, Button, Avatar } from "@mui/material";
+import React, { useEffect, useRef, useState } from "react";
+import {
+  Box,
+  Typography,
+  Button,
+  Avatar,
+  CircularProgress,
+} from "@mui/material";
 import SwipeableViews from "react-swipeable-views-react-18-fix";
 import "./App.css";
 import { colors } from "./settings/theme.js";
@@ -11,20 +17,45 @@ function App() {
   const [scrollX, setscrollX] = useState(0);
   const [scrolEnd, setscrolEnd] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
+  const [data, setData] = useState([]);
 
+  /** setting data */
+  useEffect(() => {
+    setData(SWIPER_DATA);
+  }, []);
+
+  /**
+   * @method handleStepChange
+   * @description Updating state on scroll
+   * @param step Updated step
+   */
   const handleStepChange = (step) => {
     setActiveStep(step);
   };
 
-  const calculateBarHeight = () => {
+  /**
+   * @method getBarClassName
+   * @description to get class for bar
+   */
+  const getBarClassName = () => {
     return activeStep === 0 ? "bar" : `bar expand`;
   };
 
-  const _checkIconFirstClass = (index) => {
+  /**
+   * @method getIconClassName
+   * @description to get class for icon
+   * @param index index of icon
+   */
+  const getIconClassName = (index) => {
     return activeStep === 0 ? "icon" : index < 6 ? `icon icon${index}` : "";
   };
 
-  const slide = (shift) => {
+  /**
+   * @method slideNextPrev
+   * @description to slide icons next or prev
+   * @param shift slide amount in pixels
+   */
+  const slideNextPrev = (shift) => {
     scrollRef.current.scrollLeft += shift;
     setscrollX(scrollX + shift);
     if (
@@ -38,6 +69,10 @@ function App() {
     }
   };
 
+  /**
+   * @method scrollCheck
+   * @description to update scroll position
+   */
   const scrollCheck = () => {
     setscrollX(scrollRef.current.scrollLeft);
     if (
@@ -53,192 +88,221 @@ function App() {
 
   return (
     <>
-      <SwipeableViews index={activeStep} onChangeIndex={handleStepChange}>
-        {SWIPER_DATA.map((data, index) => (
-          <Box
-            className="root"
-            sx={[
-              styles.container,
-              {
-                background: data.color,
-              },
-            ]}
-          >
-            {index == 0 ? (
-              <Box sx={styles.introContainer}>
-                <Box sx={{ display: "flex", flexDirection: "column" }}>
-                  <Typography
-                    sx={[
-                      styles.introTitle,
-
-                      { color: data.darkTheme ? colors.white : colors.black },
-                    ]}
-                  >
-                    {"YOUR"}
-                  </Typography>
-                  <Typography
-                    sx={[
-                      styles.introTitle,
-
-                      { color: data.darkTheme ? colors.white : colors.black },
-                    ]}
-                  >
-                    {"BACKPACK"}
-                  </Typography>
-                  <Box
-                    component="img"
-                    alt="Logo"
-                    sx={styles.introLogo}
-                    src={require(`./assets/images/${data?.logoName}`)}
-                  />
-                </Box>
-                <Box
-                  component="img"
-                  alt="Image"
-                  sx={styles.introImage}
-                  src={require(`./assets/images/${data?.imgName}`)}
-                />
-                <Box sx={styles.introButtonContainer}>
-                  <Typography sx={styles.introButtonTitle}>
-                    {data?.buttonTitle}
-                  </Typography>
-                  <Box
-                    component="img"
-                    alt="RightArrow"
-                    src={require(`./assets/images/right_arrow.png`)}
-                  />
-                </Box>
-              </Box>
-            ) : (
-              <Box sx={[styles.subcontainerWithMenu]}>
-                <Box
-                  component="img"
-                  alt="Logo"
-                  src={require(`./assets/images/${data?.logoName}`)}
-                />
-                <Box sx={styles.titleContainer}>
-                  <Typography
-                    sx={[
-                      styles.title,
-                      { color: data.darkTheme ? colors.white : colors.black },
-                    ]}
-                  >
-                    {data?.title}
-                  </Typography>
-                </Box>
-                <Box sx={styles.subtitleConttainer}>
-                  <Typography
-                    sx={[
-                      styles.subtitle,
-                      {
-                        color: data.darkTheme ? colors.white : colors.black,
-                      },
-                    ]}
-                  >
-                    {data?.subTitle}
-                  </Typography>
-                </Box>
-                <Box
-                  component="img"
-                  alt="Image"
-                  sx={[styles.image]}
-                  src={require(`./assets/images/${data?.imgName}`)}
-                />
-                <Button
-                  sx={[
-                    styles.button,
-                    {
-                      backgroundColor: data.darkTheme
-                        ? colors.white
-                        : colors.black,
-                      color: data.darkTheme ? colors.black : colors.white,
-                      ":hover": {
-                        backgroundColor: data.darkTheme
-                          ? colors.white
-                          : colors.black,
-                        color: data.darkTheme ? colors.black : colors.white,
-                      },
-                    },
-                  ]}
-                  // variant="outlined"
-                >
-                  {data?.buttonTitle}
-                </Button>
-              </Box>
-            )}
-          </Box>
-        ))}
-      </SwipeableViews>
-
-      <div className={calculateBarHeight()}>
-        <Box
-          sx={[
-            styles.prevArrrow,
-            {
-              opacity: activeStep == 0 ? 0 : 1,
-            },
-          ]}
-        >
-          {scrollX !== 0 && (
-            <Box
-              component="img"
-              alt="Icon"
-              src={require(`./assets/images/caret_left.png`)}
-              onClick={() => {
-                slide(-menuIconRef.current.getBoundingClientRect().width);
-              }}
-            />
-          )}
-        </Box>
-        <div
-          ref={scrollRef}
-          onScroll={scrollCheck}
-          className="menu-bar"
-          style={styles.menuBar}
-        >
-          {SWIPER_DATA.map((data, index) =>
-            index != 0 ? (
+      {data && data.length > 0 ? (
+        <>
+          <SwipeableViews index={activeStep} onChangeIndex={handleStepChange}>
+            {SWIPER_DATA.map((data, index) => (
               <Box
-                ref={menuIconRef}
-                className={_checkIconFirstClass(index)}
+                className="root"
                 sx={[
-                  styles.menuIconContainer,
+                  styles.container,
                   {
-                    backgroundColor:
-                      activeStep == index ? colors.white80 : "transparent",
-                    border:
-                      activeStep == index
-                        ? `1px solid ${colors.lightGrey}`
-                        : null,
+                    background: data.color,
                   },
                 ]}
               >
+                {index == 0 ? (
+                  <Box sx={styles.introContainer}>
+                    <Box sx={styles.introTitleContainer}>
+                      <Typography
+                        sx={[
+                          styles.introTitle,
+
+                          {
+                            color: data.darkTheme ? colors.white : colors.black,
+                          },
+                        ]}
+                      >
+                        {"YOUR"}
+                      </Typography>
+                      <Typography
+                        sx={[
+                          styles.introTitle,
+
+                          {
+                            color: data.darkTheme ? colors.white : colors.black,
+                          },
+                        ]}
+                      >
+                        {"BACKPACK"}
+                      </Typography>
+                      <Box
+                        component="img"
+                        alt="Logo"
+                        sx={styles.introLogo}
+                        src={require(`./assets/images/${data?.logoName}`)}
+                      />
+                    </Box>
+                    <Box
+                      component="img"
+                      alt="Image"
+                      sx={styles.introImage}
+                      src={require(`./assets/images/${data?.imgName}`)}
+                    />
+                    <Box sx={styles.introButtonContainer}>
+                      <Typography sx={styles.introButtonTitle}>
+                        {data?.buttonTitle}
+                      </Typography>
+                      <Box
+                        component="img"
+                        sx={{ width: "1.2vh", height: "1vh" }}
+                        alt="RightArrow"
+                        src={require(`./assets/images/right_arrow.png`)}
+                      />
+                    </Box>
+                  </Box>
+                ) : (
+                  <Box sx={[styles.subcontainerWithMenu]}>
+                    <Box
+                      component="img"
+                      alt="Logo"
+                      sx={{ width: "auto", minHeight: "5vh" }}
+                      src={require(`./assets/images/${data?.logoName}`)}
+                    />
+                    <Box sx={styles.titleContainer}>
+                      <Typography
+                        sx={[
+                          styles.title,
+                          {
+                            color: data.darkTheme ? colors.white : colors.black,
+                          },
+                        ]}
+                      >
+                        {data?.title}
+                      </Typography>
+                    </Box>
+                    <Box sx={styles.subtitleConttainer}>
+                      <Typography
+                        sx={[
+                          styles.subtitle,
+                          {
+                            color: data.darkTheme ? colors.white : colors.black,
+                          },
+                        ]}
+                      >
+                        {data?.subTitle}
+                      </Typography>
+                    </Box>
+                    <Box
+                      component="img"
+                      alt="Image"
+                      sx={[styles.image]}
+                      src={require(`./assets/images/${data?.imgName}`)}
+                    />
+                    <Button
+                      sx={[
+                        styles.button,
+                        {
+                          backgroundColor: data.darkTheme
+                            ? colors.white
+                            : colors.black,
+                          color: data.darkTheme ? colors.black : colors.white,
+                          ":hover": {
+                            backgroundColor: data.darkTheme
+                              ? colors.white
+                              : colors.black,
+                            color: data.darkTheme ? colors.black : colors.white,
+                          },
+                        },
+                      ]}
+                    >
+                      {data?.buttonTitle}
+                    </Button>
+                  </Box>
+                )}
+              </Box>
+            ))}
+          </SwipeableViews>
+
+          <div className={getBarClassName()}>
+            <Box
+              sx={[
+                styles.prevArrrow,
+                {
+                  opacity: activeStep == 0 ? 0 : 1,
+                },
+              ]}
+            >
+              {scrollX !== 0 && (
                 <Box
                   component="img"
                   alt="Icon"
-                  sx={{ width: "32px", height: "32px" }}
-                  src={require(`./assets/images/${data?.iconName}`)}
+                  sx={{ width: "3vh", height: "3vh" }}
+                  src={require(`./assets/images/caret_left.png`)}
                   onClick={() => {
-                    handleStepChange(index);
+                    slideNextPrev(
+                      -menuIconRef.current.getBoundingClientRect().width
+                    );
                   }}
                 />
-              </Box>
-            ) : null
-          )}
-        </div>
-        <Box sx={[styles.nextArrow, { opacity: activeStep == 0 ? 0 : 1 }]}>
-          {!scrolEnd && (
-            <Box
-              component="img"
-              alt="Icon"
-              src={require(`./assets/images/caret_right.png`)}
-              onClick={() => {
-                slide(menuIconRef.current.getBoundingClientRect().width);
-              }}
-            />
-          )}
+              )}
+            </Box>
+            <div
+              ref={scrollRef}
+              onScroll={scrollCheck}
+              className="menu-bar"
+              style={styles.menuBar}
+            >
+              {SWIPER_DATA.map((data, index) =>
+                index != 0 ? (
+                  <Box
+                    ref={menuIconRef}
+                    className={getIconClassName(index)}
+                    sx={[
+                      styles.menuIconContainer,
+                      {
+                        backgroundColor:
+                          activeStep == index ? colors.white80 : "transparent",
+                        border:
+                          activeStep == index
+                            ? `1px solid ${colors.lightGrey}`
+                            : null,
+                      },
+                    ]}
+                  >
+                    <Box
+                      component="img"
+                      alt="Icon"
+                      sx={{ width: "4vh", height: "4vh" }}
+                      src={require(`./assets/images/${data?.iconName}`)}
+                      onClick={() => {
+                        handleStepChange(index);
+                      }}
+                    />
+                  </Box>
+                ) : null
+              )}
+            </div>
+            <Box sx={[styles.nextArrow, { opacity: activeStep == 0 ? 0 : 1 }]}>
+              {!scrolEnd && (
+                <Box
+                  component="img"
+                  alt="Icon"
+                  sx={{ width: "3vh", height: "3vh " }}
+                  src={require(`./assets/images/caret_right.png`)}
+                  onClick={() => {
+                    slideNextPrev(
+                      menuIconRef.current.getBoundingClientRect().width
+                    );
+                  }}
+                />
+              )}
+            </Box>
+          </div>
+        </>
+      ) : (
+        <Box
+          sx={{
+            width: "100vw",
+            height: "100vh",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <CircularProgress />
         </Box>
-      </div>
+      )}
     </>
   );
 }
@@ -252,16 +316,9 @@ const styles = {
     overflow: "auto",
   },
   subcontainerWithMenu: {
-    // height: "100%",
-    // minHeight: "100%",
-    // backgroundColor: "red",
-    // overflow: "auto",
     pt: "10vh",
-    // pl: "10vw",
-    // pr: "10vw",
-    // pt: "80px",
-    pl: "24px",
-    pr: "24px",
+    pl: "4vw",
+    pr: "4vw",
     pb: "20vh",
     display: "flex",
     flexDirection: "column",
@@ -271,40 +328,39 @@ const styles = {
     display: "flex",
     textAlign: "center",
     mt: "3vh",
-    pl: "8px",
-    pr: "8px",
+    pl: "2vw",
+    pr: "2vw",
   },
   title: {
-    fontSize: "32px",
+    fontSize: "4vh",
     fontWeight: "600",
     fontFamily: "Roboto Regular",
-    lineHeight: "38px",
+    lineHeight: "4.5vh",
   },
   subtitleConttainer: {
     display: "flex",
     textAlign: "center",
-    // mt: "16px",
     mt: "1vh",
-    pl: "8px",
-    pr: "8px",
+    pl: "3vw",
+    pr: "3vw",
   },
   subtitle: {
-    fontSize: "16px",
+    fontSize: "2vh",
     fontWeight: "400",
     fontFamily: "Roboto Regular",
-    lineHeight: "24px",
+    lineHeight: "3vh",
   },
   image: { mt: "3vh", width: "auto", maxWidth: "85vw" },
   introImage: { mt: "3vh", width: "auto", maxWidth: "85vw" },
   button: {
     mt: "3vh",
-    pt: "16px",
-    pb: "16px",
+    pt: "2vh",
+    pb: "2vh",
     minWidth: "60vw",
-    borderRadius: "40px",
-    fontSize: "17px",
+    borderRadius: "5vh",
+    fontSize: "2vh",
     fontWeight: "700",
-    lineHeight: "24px",
+    lineHeight: "3vh",
     fontFamily: "Roboto Regular",
     letterSpacing: "1.7px",
   },
@@ -333,39 +389,23 @@ const styles = {
   },
   introContainer: {
     height: "100%",
-    // width: "100%",
-    // pt: "80px",
-    // pl: "34px",
-    // pr: "34px",
-    // pl: "0px",
-    // pr: "px",
     display: "flex",
-    // flex: 1,
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
-    // justifyContent: "center",
+    ml: "24px",
+    mr: "24px",
   },
-  introTitleContainer: {
-    backgroundColor: "green",
-    mt: "11vh",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    flexDirection: "column",
-
-    // width: "247px",
-    // width: "70vw",
-  },
+  introTitleContainer: { display: "flex", flexDirection: "column" },
   introTitle: {
-    fontSize: "48px",
+    fontSize: "5.5vh",
     fontWeight: "900",
     fontFamily: "Roboto Regular",
-    lineHeight: "44px",
+    lineHeight: "5vh",
   },
   introLogo: {
-    width: "152px",
-    height: "33px",
+    width: "40vw",
+    height: "4vh",
     alignSelf: "end",
   },
   introButtonContainer: {
@@ -375,15 +415,14 @@ const styles = {
     alignItems: "center",
     justifyContent: "center",
     mt: "5vh",
-    // mb: "11vh",
   },
   introButtonTitle: {
-    fontSize: "17px",
+    fontSize: "2vh",
     color: colors.black,
     fontWeight: "700",
     fontFamily: "Roboto Regular",
-    mr: "8px",
-    lineHeight: "24px",
+    mr: "2vw",
+    lineHeight: "3vh",
   },
 };
 

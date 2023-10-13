@@ -7,9 +7,9 @@
   position: fixed;
   bottom: 10vh;
   width: 0%;
-  height: 49px;
+  height: 5.5vh;
   left: 8vw;
-  border-radius: 40px;
+  border-radius: 6vh;
   display: flex;
   transition: 0.5s;
 }
