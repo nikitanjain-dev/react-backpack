@@ -1,15 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
-import {
-  Box,
-  Typography,
-  Button,
-  Avatar,
-  CircularProgress,
-} from "@mui/material";
+import { Box, Typography, Button, CircularProgress } from "@mui/material";
 import SwipeableViews from "react-swipeable-views-react-18-fix";
 import "./App.css";
 import { colors } from "./settings/theme.js";
-import { SWIPER_DATA } from "./settings/constant.js";
+const swiperData = require("./settings/swiper_data.json");
 
 function App() {
   let scrollRef = useRef(null);
@@ -21,7 +15,7 @@ function App() {
 
   /** setting data */
   useEffect(() => {
-    setData(SWIPER_DATA);
+    setData(swiperData);
   }, []);
 
   /**
@@ -86,44 +80,124 @@ function App() {
     }
   };
 
+  const renderMenuItems = () => {
+    return (
+      <div className={getBarClassName()}>
+        <Box
+          sx={[
+            styles.prevArrrow,
+            {
+              opacity: activeStep == 0 ? 0 : 1,
+            },
+          ]}
+        >
+          {scrollX !== 0 && data && data.length > 6 && (
+            <Box
+              component="img"
+              alt="Icon"
+              sx={styles.caretLeft}
+              src={require(`./assets/images/caret_left.png`)}
+              onClick={() => {
+                slideNextPrev(
+                  -menuIconRef.current.getBoundingClientRect().width
+                );
+              }}
+            />
+          )}
+        </Box>
+        <div
+          ref={scrollRef}
+          onScroll={scrollCheck}
+          className="menu-bar"
+          style={styles.menuBar}
+        >
+          {data.map((data, index) =>
+            index != 0 ? (
+              <Box
+                key={index}
+                ref={menuIconRef}
+                className={getIconClassName(index)}
+                sx={[
+                  styles.menuIconContainer,
+                  {
+                    backgroundColor:
+                      activeStep == index ? colors.white80 : "transparent",
+                    border:
+                      activeStep == index
+                        ? `1px solid ${colors.lightGrey}`
+                        : null,
+                  },
+                ]}
+              >
+                <Box
+                  component="img"
+                  alt="Icon"
+                  sx={styles.itemIcon}
+                  src={require(`./assets/images/${data?.itemIcon}`)}
+                  onClick={() => {
+                    handleStepChange(index);
+                  }}
+                />
+              </Box>
+            ) : null
+          )}
+        </div>
+        <Box sx={[styles.nextArrow, { opacity: activeStep == 0 ? 0 : 1 }]}>
+          {!scrolEnd && data && data.length > 6 && (
+            <Box
+              component="img"
+              alt="Right Icon"
+              sx={styles.caretLeft}
+              src={require(`./assets/images/caret_right.png`)}
+              onClick={() => {
+                slideNextPrev(
+                  menuIconRef.current.getBoundingClientRect().width
+                );
+              }}
+            />
+          )}
+        </Box>
+      </div>
+    );
+  };
+
+  const renderLoader = () => {
+    return (
+      <Box
+        sx={{
+          width: "100vw",
+          height: "100vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
+  };
+
   return (
     <>
       {data && data.length > 0 ? (
         <>
           <SwipeableViews index={activeStep} onChangeIndex={handleStepChange}>
-            {SWIPER_DATA.map((data, index) => (
+            {data.map((data, index) => (
               <Box
+                key={index}
                 className="root"
                 sx={[
                   styles.container,
                   {
-                    background: data.color,
+                    background: data?.backgroundColor ?? colors.lavender,
                   },
                 ]}
               >
                 {index == 0 ? (
                   <Box sx={styles.introContainer}>
                     <Box sx={styles.introTitleContainer}>
-                      <Typography
-                        sx={[
-                          styles.introTitle,
-
-                          {
-                            color: data.darkTheme ? colors.white : colors.black,
-                          },
-                        ]}
-                      >
-                        {"YOUR"}
-                      </Typography>
-                      <Typography
-                        sx={[
-                          styles.introTitle,
-
-                          {
-                            color: data.darkTheme ? colors.white : colors.black,
-                          },
-                        ]}
-                      >
+                      <Typography sx={[styles.introTitle]}>{"YOUR"}</Typography>
+                      <Typography sx={[styles.introTitle]}>
                         {"BACKPACK"}
                       </Typography>
                       <Box
@@ -137,15 +211,15 @@ function App() {
                       component="img"
                       alt="Image"
                       sx={styles.introImage}
-                      src={require(`./assets/images/${data?.imgName}`)}
+                      src={require(`./assets/images/${data?.imageName}`)}
                     />
                     <Box sx={styles.introButtonContainer}>
                       <Typography sx={styles.introButtonTitle}>
-                        {data?.buttonTitle}
+                        {data?.button?.title ?? ""}
                       </Typography>
                       <Box
                         component="img"
-                        sx={{ width: "1.2vh", height: "1vh" }}
+                        sx={styles.rightArrow}
                         alt="RightArrow"
                         src={require(`./assets/images/right_arrow.png`)}
                       />
@@ -156,7 +230,7 @@ function App() {
                     <Box
                       component="img"
                       alt="Logo"
-                      sx={{ width: "35vw", minHeight: "auto" }}
+                      sx={styles.logo}
                       src={require(`./assets/images/${data?.logoName}`)}
                     />
                     <Box sx={styles.titleContainer}>
@@ -164,11 +238,11 @@ function App() {
                         sx={[
                           styles.title,
                           {
-                            color: data.darkTheme ? colors.white : colors.black,
+                            color: data?.title?.color ?? colors.black,
                           },
                         ]}
                       >
-                        {data?.title}
+                        {data?.title?.text ?? ""}
                       </Typography>
                     </Box>
                     <Box sx={styles.subtitleConttainer}>
@@ -176,132 +250,45 @@ function App() {
                         sx={[
                           styles.subtitle,
                           {
-                            color: data.darkTheme ? colors.white : colors.black,
+                            color: data?.subTitle?.color ?? colors.black,
                           },
                         ]}
                       >
-                        {data?.subTitle}
+                        {data?.subTitle?.text ?? ""}
                       </Typography>
                     </Box>
                     <Box
                       component="img"
                       alt="Image"
                       sx={[styles.image]}
-                      src={require(`./assets/images/${data?.imgName}`)}
+                      src={require(`./assets/images/${data?.imageName}`)}
                     />
                     <Button
                       sx={[
                         styles.button,
                         {
-                          backgroundColor: data.darkTheme
-                            ? colors.white
-                            : colors.black,
-                          color: data.darkTheme ? colors.black : colors.white,
+                          backgroundColor:
+                            data?.button?.backgroundColor ?? colors.black,
+                          color: data?.button?.titleColor ?? colors.black,
                           ":hover": {
-                            backgroundColor: data.darkTheme
-                              ? colors.white
-                              : colors.black,
-                            color: data.darkTheme ? colors.black : colors.white,
+                            backgroundColor:
+                              data?.button?.backgroundColor ?? colors.black,
+                            color: data?.button?.titleColor ?? colors.black,
                           },
                         },
                       ]}
                     >
-                      {data?.buttonTitle}
+                      {data?.button?.title ?? ""}
                     </Button>
                   </Box>
                 )}
               </Box>
             ))}
           </SwipeableViews>
-
-          <div className={getBarClassName()}>
-            <Box
-              sx={[
-                styles.prevArrrow,
-                {
-                  opacity: activeStep == 0 ? 0 : 1,
-                },
-              ]}
-            >
-              {scrollX !== 0 && (
-                <Box
-                  component="img"
-                  alt="Icon"
-                  sx={{ width: "3vh", height: "3vh" }}
-                  src={require(`./assets/images/caret_left.png`)}
-                  onClick={() => {
-                    slideNextPrev(
-                      -menuIconRef.current.getBoundingClientRect().width
-                    );
-                  }}
-                />
-              )}
-            </Box>
-            <div
-              ref={scrollRef}
-              onScroll={scrollCheck}
-              className="menu-bar"
-              style={styles.menuBar}
-            >
-              {SWIPER_DATA.map((data, index) =>
-                index != 0 ? (
-                  <Box
-                    ref={menuIconRef}
-                    className={getIconClassName(index)}
-                    sx={[
-                      styles.menuIconContainer,
-                      {
-                        backgroundColor:
-                          activeStep == index ? colors.white80 : "transparent",
-                        border:
-                          activeStep == index
-                            ? `1px solid ${colors.lightGrey}`
-                            : null,
-                      },
-                    ]}
-                  >
-                    <Box
-                      component="img"
-                      alt="Icon"
-                      sx={{ width: "4vh", height: "4vh" }}
-                      src={require(`./assets/images/${data?.iconName}`)}
-                      onClick={() => {
-                        handleStepChange(index);
-                      }}
-                    />
-                  </Box>
-                ) : null
-              )}
-            </div>
-            <Box sx={[styles.nextArrow, { opacity: activeStep == 0 ? 0 : 1 }]}>
-              {!scrolEnd && (
-                <Box
-                  component="img"
-                  alt="Icon"
-                  sx={{ width: "3vh", height: "3vh " }}
-                  src={require(`./assets/images/caret_right.png`)}
-                  onClick={() => {
-                    slideNextPrev(
-                      menuIconRef.current.getBoundingClientRect().width
-                    );
-                  }}
-                />
-              )}
-            </Box>
-          </div>
+          {renderMenuItems()}
         </>
       ) : (
-        <Box
-          sx={{
-            width: "100vw",
-            height: "100vh",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <CircularProgress />
-        </Box>
+        renderLoader()
       )}
     </>
   );
@@ -402,6 +389,7 @@ const styles = {
     fontWeight: "900",
     fontFamily: "Roboto Regular",
     lineHeight: "5vh",
+    color: colors.black,
   },
   introLogo: {
     width: "40vw",
@@ -424,6 +412,10 @@ const styles = {
     mr: "2vw",
     lineHeight: "3vh",
   },
+  rightArrow: { width: "1.2vh", height: "1vh" },
+  logo: { width: "35vw", minHeight: "auto" },
+  caretLeft: { width: "3vh", height: "3vh" },
+  itemIcon: { width: "4vh", height: "4vh" },
 };
 
 export default App;
