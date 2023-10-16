@@ -3,7 +3,7 @@ import { Box, Typography, Button, CircularProgress } from "@mui/material";
 import SwipeableViews from "react-swipeable-views-react-18-fix";
 import "./App.css";
 import { colors } from "./settings/theme.js";
-const swiperData = require("./settings/swiper_data.json");
+const swiperData = require("./resources/swiper_data.json");
 
 function App() {
   let scrollRef = useRef(null);
