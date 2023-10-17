@@ -291,9 +291,9 @@ function App() {
                           </Button>
                         </Box>
                       </Box>
-                      <Box
+                      {/* <Box
                         sx={{ height: "16vh", backgroundColor: "green" }}
-                      ></Box>
+                      ></Box> */}
                     </Box>
 
                     {/* <Box sx={[styles.subcontainerWithMenu]}>
@@ -390,8 +390,8 @@ const styles = {
     display: "flex",
     textAlign: "center",
     mt: "1.9vh", //done
-    pl: "2vw",
-    pr: "2vw",
+    pl: "3vw",
+    pr: "3vw",
   },
   title: {
     fontSize: "3.8vh", //done
