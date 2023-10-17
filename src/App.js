@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { Box, Typography, Button, CircularProgress } from "@mui/material";
 import SwipeableViews from "react-swipeable-views-react-18-fix";
 import "./App.css";
+import { Helmet } from "react-helmet";
+
 import { colors } from "./settings/theme.js";
 const swiperData = require("./resources/swiper_data.json");
 
@@ -183,6 +185,16 @@ function App() {
 
   return (
     <>
+      {/* <Helmet>
+        <title>From Helmet</title>
+        <meta name="description" content="From Helmet" />
+      </Helmet> */}
+      <Helmet>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+        />
+      </Helmet>
       {data && data.length > 0 ? (
         <>
           <SwipeableViews index={activeStep} onChangeIndex={handleStepChange}>
@@ -291,69 +303,7 @@ function App() {
                           </Button>
                         </Box>
                       </Box>
-                      {/* <Box
-                        sx={{ height: "16vh", backgroundColor: "green" }}
-                      ></Box> */}
                     </Box>
-
-                    {/* <Box sx={[styles.subcontainerWithMenu]}>
-                      <Box
-                        component="img"
-                        alt="Logo"
-                        sx={styles.logo}
-                        src={require(`./assets/images/${data?.logoName}`)}
-                      />
-                      <Box sx={styles.titleContainer}>
-                        <Typography
-                          sx={[
-                            styles.title,
-                            {
-                              color: data?.title?.color ?? colors.black,
-                            },
-                          ]}
-                        >
-                          {data?.title?.text ?? ""}
-                        </Typography>
-                      </Box>
-                      <Box sx={styles.subtitleConttainer}>
-                        <Typography
-                          sx={[
-                            styles.subtitle,
-                            {
-                              color: data?.subTitle?.color ?? colors.black,
-                            },
-                          ]}
-                        >
-                          {data?.subTitle?.text ?? ""}
-                        </Typography>
-                      </Box>
-                      <Box
-                        component="img"
-                        alt="Image"
-                        sx={[styles.image]}
-                        src={require(`./assets/images/${data?.imageName}`)}
-                      />
-                      <Button
-                        sx={[
-                          styles.button,
-                          {
-                            backgroundColor:
-                              data?.button?.backgroundColor ?? colors.black,
-                            color: data?.button?.titleColor ?? colors.black,
-                            ":hover": {
-                              backgroundColor:
-                                data?.button?.backgroundColor ?? colors.black,
-                              color: data?.button?.titleColor ?? colors.black,
-                            },
-                          },
-                        ]}
-                      >
-                        {data?.button?.title ?? ""}
-                      </Button>
-                    </Box>
-                    <Box style={{ backgroundColor: "green", height: "16vh" }}>
-                      sjdfdnj
-                    </Box> */}
                   </>
                 )}
               </Box>
@@ -378,7 +328,7 @@ const styles = {
     overflow: "auto",
   },
   subcontainerWithMenu: {
-    pt: "9.5vh", //done
+    pt: "9.5vh",
     pl: "4vw",
     pr: "4vw",
     pb: "5vh",
@@ -389,52 +339,47 @@ const styles = {
   titleContainer: {
     display: "flex",
     textAlign: "center",
-    mt: "1.9vh", //done
+    mt: "1.9vh",
     pl: "3vw",
     pr: "3vw",
   },
   title: {
-    fontSize: "3.8vh", //done
+    fontSize: "3.8vh",
     fontWeight: "600",
     fontFamily: "Roboto Regular",
-    lineHeight: "4.5vh", //done
+    lineHeight: "4.5vh",
   },
   subtitleConttainer: {
     display: "flex",
     textAlign: "center",
-    mt: "1vh", //done
+    mt: "1vh",
     pl: "3vw",
     pr: "3vw",
   },
   subtitle: {
-    fontSize: "1.9vh", //done
+    fontSize: "1.9vh",
     fontWeight: "400",
     fontFamily: "Roboto Regular",
-    lineHeight: "2.9vh", //done
+    lineHeight: "2.9vh",
   },
   image: {
-    mt: "3.8vh", //done
+    mt: "3.8vh",
     height: "32vh",
     width: "90vw",
     objectFit: "contain",
-    // height: "32vh",
-    // aspectRatio: 255 / 266,
-    // width: "auto",
-    // maxWidth: "70vw",
-    // height: "auto",
   },
 
   button: {
-    mt: "3.8vh", //done
-    pt: "1.9vh", //done
-    pb: "1.9vh", //done
+    mt: "3.8vh",
+    pt: "1.9vh",
+    pb: "1.9vh",
     minWidth: "60vw",
-    borderRadius: "4.8vh", //done
-    fontSize: "2vh", //done
+    borderRadius: "4.8vh",
+    fontSize: "2vh",
     fontWeight: "700",
-    lineHeight: "2.9vh", //done
+    lineHeight: "2.9vh",
     fontFamily: "Roboto Bold",
-    letterSpacing: "0.2vh", //done
+    letterSpacing: "0.2vh",
   },
   prevArrrow: {
     width: "7vw",
@@ -470,29 +415,23 @@ const styles = {
   },
   introTitleContainer: { display: "flex", flexDirection: "column" },
   introTitle: {
-    fontSize: "5.7vh", //done
+    fontSize: "5.7vh",
     fontWeight: "900",
     fontFamily: "Roboto Black",
-    lineHeight: "5.3vh", //done
+    lineHeight: "5.3vh",
     color: colors.black,
   },
   introLogo: {
-    // width: "40vw",
-    // height: "4vh",
-    // height: "3.8vh",
-    // aspectRatio: 152 / 33,
     height: "3.8vh",
     width: "auto",
     objectFit: "contain",
     alignSelf: "end",
   },
   introImage: {
-    mt: "3.8vh", //done
+    mt: "3.8vh",
     height: "44vh",
     width: "auto",
     objectFit: "contain",
-    // width: "auto",
-    // maxWidth: "85vw",
   },
   introButtonContainer: {
     display: "flex",
@@ -500,30 +439,25 @@ const styles = {
     textAlign: "center",
     alignItems: "center",
     justifyContent: "center",
-    mt: "6.1vh", //done
+    mt: "6.1vh",
   },
   introButtonTitle: {
-    fontSize: "2vh", //done
+    fontSize: "2vh",
     color: colors.black,
     fontWeight: "700",
     fontFamily: "Roboto Bold",
     mr: "2vw",
-    lineHeight: "2.99vh", //done
-    letterSpacing: "0.2vh", //done
+    lineHeight: "2.99vh",
+    letterSpacing: "0.2vh",
   },
   rightArrow: {
     width: "1.2vh",
     height: "1vh",
   },
   logo: {
-    // height: "4.3vh",
-    // aspectRatio: 121.35 / 36,
-
     height: "4.3vh",
     width: "90vw",
     objectFit: "contain",
-    // width: "35vw",
-    // minHeight: "auto",
   },
   caretLeft: {
     width: "3vh",
