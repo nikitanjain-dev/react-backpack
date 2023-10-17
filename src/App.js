@@ -122,7 +122,11 @@ function App() {
                   {
                     backgroundColor:
                       activeStep == index ? colors.white80 : "transparent",
-                    border:
+                    borderLeft:
+                      activeStep == index
+                        ? `1px solid ${colors.lightGrey}`
+                        : null,
+                    borderRight:
                       activeStep == index
                         ? `1px solid ${colors.lightGrey}`
                         : null,
@@ -226,61 +230,131 @@ function App() {
                     </Box>
                   </Box>
                 ) : (
-                  <Box sx={[styles.subcontainerWithMenu]}>
-                    <Box
-                      component="img"
-                      alt="Logo"
-                      sx={styles.logo}
-                      src={require(`./assets/images/${data?.logoName}`)}
-                    />
-                    <Box sx={styles.titleContainer}>
-                      <Typography
-                        sx={[
-                          styles.title,
-                          {
-                            color: data?.title?.color ?? colors.black,
-                          },
-                        ]}
-                      >
-                        {data?.title?.text ?? ""}
-                      </Typography>
+                  <>
+                    <Box sx={{ height: "100vh" }}>
+                      <Box sx={{ height: "84vh" }}>
+                        <Box sx={[styles.subcontainerWithMenu]}>
+                          <Box
+                            component="img"
+                            alt="Logo"
+                            sx={styles.logo}
+                            src={require(`./assets/images/${data?.logoName}`)}
+                          />
+                          <Box sx={styles.titleContainer}>
+                            <Typography
+                              sx={[
+                                styles.title,
+                                {
+                                  color: data?.title?.color ?? colors.black,
+                                },
+                              ]}
+                            >
+                              {data?.title?.text ?? ""}
+                            </Typography>
+                          </Box>
+                          <Box sx={styles.subtitleConttainer}>
+                            <Typography
+                              sx={[
+                                styles.subtitle,
+                                {
+                                  color: data?.subTitle?.color ?? colors.black,
+                                },
+                              ]}
+                            >
+                              {data?.subTitle?.text ?? ""}
+                            </Typography>
+                          </Box>
+                          <Box
+                            component="img"
+                            alt="Image"
+                            sx={[styles.image]}
+                            src={require(`./assets/images/${data?.imageName}`)}
+                          />
+                          <Button
+                            sx={[
+                              styles.button,
+                              {
+                                backgroundColor:
+                                  data?.button?.backgroundColor ?? colors.black,
+                                color: data?.button?.titleColor ?? colors.black,
+                                ":hover": {
+                                  backgroundColor:
+                                    data?.button?.backgroundColor ??
+                                    colors.black,
+                                  color:
+                                    data?.button?.titleColor ?? colors.black,
+                                },
+                              },
+                            ]}
+                          >
+                            {data?.button?.title ?? ""}
+                          </Button>
+                        </Box>
+                      </Box>
+                      <Box
+                        sx={{ height: "16vh", backgroundColor: "green" }}
+                      ></Box>
                     </Box>
-                    <Box sx={styles.subtitleConttainer}>
-                      <Typography
+
+                    {/* <Box sx={[styles.subcontainerWithMenu]}>
+                      <Box
+                        component="img"
+                        alt="Logo"
+                        sx={styles.logo}
+                        src={require(`./assets/images/${data?.logoName}`)}
+                      />
+                      <Box sx={styles.titleContainer}>
+                        <Typography
+                          sx={[
+                            styles.title,
+                            {
+                              color: data?.title?.color ?? colors.black,
+                            },
+                          ]}
+                        >
+                          {data?.title?.text ?? ""}
+                        </Typography>
+                      </Box>
+                      <Box sx={styles.subtitleConttainer}>
+                        <Typography
+                          sx={[
+                            styles.subtitle,
+                            {
+                              color: data?.subTitle?.color ?? colors.black,
+                            },
+                          ]}
+                        >
+                          {data?.subTitle?.text ?? ""}
+                        </Typography>
+                      </Box>
+                      <Box
+                        component="img"
+                        alt="Image"
+                        sx={[styles.image]}
+                        src={require(`./assets/images/${data?.imageName}`)}
+                      />
+                      <Button
                         sx={[
-                          styles.subtitle,
+                          styles.button,
                           {
-                            color: data?.subTitle?.color ?? colors.black,
-                          },
-                        ]}
-                      >
-                        {data?.subTitle?.text ?? ""}
-                      </Typography>
-                    </Box>
-                    <Box
-                      component="img"
-                      alt="Image"
-                      sx={[styles.image]}
-                      src={require(`./assets/images/${data?.imageName}`)}
-                    />
-                    <Button
-                      sx={[
-                        styles.button,
-                        {
-                          backgroundColor:
-                            data?.button?.backgroundColor ?? colors.black,
-                          color: data?.button?.titleColor ?? colors.black,
-                          ":hover": {
                             backgroundColor:
                               data?.button?.backgroundColor ?? colors.black,
                             color: data?.button?.titleColor ?? colors.black,
+                            ":hover": {
+                              backgroundColor:
+                                data?.button?.backgroundColor ?? colors.black,
+                              color: data?.button?.titleColor ?? colors.black,
+                            },
                           },
-                        },
-                      ]}
-                    >
-                      {data?.button?.title ?? ""}
-                    </Button>
-                  </Box>
+                        ]}
+                      >
+                        {data?.button?.title ?? ""}
+                      </Button>
+                    </Box>
+                    <Box style={{ backgroundColor: "green", height: "16vh" }}>
+                      sjdfdnj
+                    </Box> */}
+                  </>
                 )}
               </Box>
             ))}
@@ -297,16 +371,17 @@ function App() {
 const styles = {
   container: {
     height: "100vh",
+    backgroundColor: "red",
     display: "flex",
     flexDirection: "column",
     placeItems: "center",
     overflow: "auto",
   },
   subcontainerWithMenu: {
-    pt: "10vh",
+    pt: "9.5vh", //done
     pl: "4vw",
     pr: "4vw",
-    pb: "20vh",
+    pb: "5vh",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -314,42 +389,52 @@ const styles = {
   titleContainer: {
     display: "flex",
     textAlign: "center",
-    mt: "3vh",
+    mt: "1.9vh", //done
     pl: "2vw",
     pr: "2vw",
   },
   title: {
-    fontSize: "4vh",
+    fontSize: "3.8vh", //done
     fontWeight: "600",
     fontFamily: "Roboto Regular",
-    lineHeight: "4.5vh",
+    lineHeight: "4.5vh", //done
   },
   subtitleConttainer: {
     display: "flex",
     textAlign: "center",
-    mt: "1vh",
+    mt: "1vh", //done
     pl: "3vw",
     pr: "3vw",
   },
   subtitle: {
-    fontSize: "2vh",
+    fontSize: "1.9vh", //done
     fontWeight: "400",
     fontFamily: "Roboto Regular",
-    lineHeight: "3vh",
+    lineHeight: "2.9vh", //done
   },
-  image: { mt: "3vh", width: "auto", maxWidth: "70vw", height: "auto" },
-  introImage: { mt: "3vh", width: "auto", maxWidth: "85vw" },
+  image: {
+    mt: "3.8vh", //done
+    height: "32vh",
+    width: "90vw",
+    objectFit: "contain",
+    // height: "32vh",
+    // aspectRatio: 255 / 266,
+    // width: "auto",
+    // maxWidth: "70vw",
+    // height: "auto",
+  },
+
   button: {
-    mt: "3vh",
-    pt: "2vh",
-    pb: "2vh",
+    mt: "3.8vh", //done
+    pt: "1.9vh", //done
+    pb: "1.9vh", //done
     minWidth: "60vw",
-    borderRadius: "5vh",
-    fontSize: "2vh",
+    borderRadius: "4.8vh", //done
+    fontSize: "2vh", //done
     fontWeight: "700",
-    lineHeight: "3vh",
-    fontFamily: "Roboto Regular",
-    letterSpacing: "1.7px",
+    lineHeight: "2.9vh", //done
+    fontFamily: "Roboto Bold",
+    letterSpacing: "0.2vh", //done
   },
   prevArrrow: {
     width: "7vw",
@@ -385,16 +470,29 @@ const styles = {
   },
   introTitleContainer: { display: "flex", flexDirection: "column" },
   introTitle: {
-    fontSize: "5.5vh",
+    fontSize: "5.7vh", //done
     fontWeight: "900",
-    fontFamily: "Roboto Regular",
-    lineHeight: "5vh",
+    fontFamily: "Roboto Black",
+    lineHeight: "5.3vh", //done
     color: colors.black,
   },
   introLogo: {
-    width: "40vw",
-    height: "4vh",
+    // width: "40vw",
+    // height: "4vh",
+    // height: "3.8vh",
+    // aspectRatio: 152 / 33,
+    height: "3.8vh",
+    width: "auto",
+    objectFit: "contain",
     alignSelf: "end",
+  },
+  introImage: {
+    mt: "3.8vh", //done
+    height: "44vh",
+    width: "auto",
+    objectFit: "contain",
+    // width: "auto",
+    // maxWidth: "85vw",
   },
   introButtonContainer: {
     display: "flex",
@@ -402,20 +500,39 @@ const styles = {
     textAlign: "center",
     alignItems: "center",
     justifyContent: "center",
-    mt: "5vh",
+    mt: "6.1vh", //done
   },
   introButtonTitle: {
-    fontSize: "2vh",
+    fontSize: "2vh", //done
     color: colors.black,
     fontWeight: "700",
-    fontFamily: "Roboto Regular",
+    fontFamily: "Roboto Bold",
     mr: "2vw",
-    lineHeight: "3vh",
+    lineHeight: "2.99vh", //done
+    letterSpacing: "0.2vh", //done
   },
-  rightArrow: { width: "1.2vh", height: "1vh" },
-  logo: { width: "35vw", minHeight: "auto" },
-  caretLeft: { width: "3vh", height: "3vh" },
-  itemIcon: { width: "4vh", height: "4vh" },
+  rightArrow: {
+    width: "1.2vh",
+    height: "1vh",
+  },
+  logo: {
+    // height: "4.3vh",
+    // aspectRatio: 121.35 / 36,
+
+    height: "4.3vh",
+    width: "90vw",
+    objectFit: "contain",
+    // width: "35vw",
+    // minHeight: "auto",
+  },
+  caretLeft: {
+    width: "3vh",
+    height: "3vh",
+  },
+  itemIcon: {
+    width: "4vh",
+    height: "4vh",
+  },
 };
 
 export default App;

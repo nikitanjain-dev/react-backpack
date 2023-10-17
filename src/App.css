@@ -4,12 +4,13 @@
 
 .bar {
   background-color: #ffffffcc;
+  /* background-color: red; */
   position: fixed;
   bottom: 10vh;
   width: 0%;
-  height: 5.5vh;
+  height: 5.9vh;
   left: 8vw;
-  border-radius: 6vh;
+  border-radius: 4.8vh;
   display: flex;
   transition: 0.5s;
 }
