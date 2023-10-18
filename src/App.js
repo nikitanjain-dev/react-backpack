@@ -185,10 +185,6 @@ function App() {
 
   return (
     <>
-      {/* <Helmet>
-        <title>From Helmet</title>
-        <meta name="description" content="From Helmet" />
-      </Helmet> */}
       <Helmet>
         <meta
           name="viewport"
