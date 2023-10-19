@@ -11,112 +11,112 @@
     },
     "imageName": "bag.png",
     "backgroundColor": "#E2E9F6",
-    "buttonTitle": "Swipe for deals",
     "itemIcon": "bag.png",
     "button": {
       "title": "Swipe for deals",
       "backgroundColor": null,
-      "titleColor": null
+      "titleColor": null,
+      "url": null
     }
   },
   {
     "logoName": "chegg_logo.png",
     "title": {
-      "text": "Score extras for school & life",
+      "text": "24/7 study help",
       "color": "#0F1B33"
     },
     "subTitle": {
-      "text": "Get free perks from DoorDash, Calm, and Prezi with Chegg Study",
+      "text": "Plus free perks from Doordash, Calm, and more",
       "color": "#0F1B33"
     },
     "imageName": "books.png",
     "backgroundColor": "#F6E1B5",
-    "buttonTitle": "HIT THE BOOKS",
     "itemIcon": "book_icon.png",
     "button": {
-      "title": "HIT THE BOOKS",
+      "title": "HOOK ME UP",
       "backgroundColor": "#0F1B33",
-      "titleColor": "#FFF"
+      "titleColor": "#FFF",
+      "url": "https://www.chegg.com/study-pack"
     }
   },
   {
     "logoName": "zeemee_logo.png",
     "title": {
-      "text": "$1,000 a month is a lot of change",
+      "text": "$1,000 is a lot of change",
       "color": "#0F1B33"
     },
     "subTitle": {
-      "text": "Apply to exclusive scholarships just for the Zeemee community",
+      "text": "Apply for exclusive scholarships every month",
       "color": "#0F1B33"
     },
     "imageName": "piggy_bank.png",
     "backgroundColor": "#AEE3E8",
-    "buttonTitle": "KA-Ching",
     "itemIcon": "scholarship_icon.png",
     "button": {
-      "title": "KA-Ching",
+      "title": "KA-CHING",
       "backgroundColor": "#0F1B33",
-      "titleColor": "#FFF"
+      "titleColor": "#FFF",
+      "url": null
     }
   },
   {
-    "logoName": "zeemee_logo.png",
+    "logoName": "atlantic_records_logo.png",
     "title": {
-      "text": "Essential gear for undergrads",
+      "text": "25 days of hot giveaways",
       "color": "#0F1B33"
     },
     "subTitle": {
-      "text": "Enter once a day to win this month’s AirPod giveaway",
+      "text": "Enter every 24 hours for free giveaways from your favorite artists and brands",
       "color": "#0F1B33"
     },
     "imageName": "airpods.png",
     "backgroundColor": "#82D6C3",
-    "buttonTitle": "WANT",
     "itemIcon": "headphone_icon.png",
     "button": {
-      "title": "WANT",
+      "title": "I NEED THIS",
       "backgroundColor": "#0F1B33",
-      "titleColor": "#FFF"
+      "titleColor": "#FFF",
+      "url": null
     }
   },
   {
     "logoName": "zeemee_logo_transparent.png",
     "title": {
-      "text": "Did somebody say live music?",
+      "text": "Listen up",
       "color": "#FFF"
     },
     "subTitle": {
-      "text": "Enter to win tickets to an Ed Sheeran concert",
+      "text": "Enter once a day to win this month’s AirPods Pro giveaway",
       "color": "#FFF"
     },
     "imageName": "tickes.png",
     "backgroundColor": "#234155",
-    "buttonTitle": "Admit One",
     "itemIcon": "tickets_icon.png",
     "button": {
-      "title": "Admit One",
+      "title": "I WANT IT",
       "backgroundColor": "#FFF",
-      "titleColor": "#0F1B33"
+      "titleColor": "#0F1B33",
+      "url": null
     }
   },
   {
-    "logoName": "nba_logo.png",
+    "logoName": "zeemee_logo_transparent.png",
     "title": {
-      "text": "Follow your team all season",
+      "text": "Capture the moment",
       "color": "#FFF"
     },
     "subTitle": {
-      "text": "Get 40% off NBA League Pass",
+      "text": "Enter once a day to win this month’s Instax giveaway",
       "color": "#FFF"
     },
-    "imageName": "basket_ball.png",
+    "imageName": "instax_camera.png",
     "backgroundColor": "#1888AB",
-    "buttonTitle": "Swish",
     "itemIcon": "basketball_icon.png",
     "button": {
-      "title": "Swish",
+      "title": "GIMME",
       "backgroundColor": "#FFF",
-      "titleColor": "#0F1B33"
+      "titleColor": "#0F1B33",
+      "url": null
     }
   }
 ]

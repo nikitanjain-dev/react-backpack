@@ -82,6 +82,17 @@ function App() {
     }
   };
 
+  /**
+   * @method onCTAClick
+   * @description called on click of CTA button
+   *  @param url url to open on button click
+   */
+  const onCTAClick = (url) => {
+    if (url) {
+      window.open(url, "_blank");
+    }
+  };
+
   const renderMenuItems = () => {
     return (
       <div className={getBarClassName()}>
@@ -132,6 +143,7 @@ function App() {
                       activeStep == index
                         ? `1px solid ${colors.lightGrey}`
                         : null,
+                    transition: "background-color 1s",
                   },
                 ]}
               >
@@ -294,6 +306,9 @@ function App() {
                                 },
                               },
                             ]}
+                            onClick={() => {
+                              onCTAClick(data?.button?.url);
+                            }}
                           >
                             {data?.button?.title ?? ""}
                           </Button>
