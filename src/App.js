@@ -84,12 +84,12 @@ function App() {
 
   /**
    * @method onCTAClick
-   * @description called on click of CTA button
+   * @description It will call a native method to open url in browser
    *  @param url url to open on button click
    */
   const onCTAClick = (url) => {
     if (url) {
-      window.open(url, "_blank");
+      window?.BridgeApi?.openBrowser(url);
     }
   };
 
@@ -138,11 +138,11 @@ function App() {
                     borderLeft:
                       activeStep == index
                         ? `1px solid ${colors.lightGrey}`
-                        : null,
+                        : `1px solid transparent`,
                     borderRight:
                       activeStep == index
                         ? `1px solid ${colors.lightGrey}`
-                        : null,
+                        : `1px solid transparent`,
                     transition: "background-color 1s",
                   },
                 ]}
@@ -339,13 +339,18 @@ const styles = {
     overflow: "auto",
   },
   subcontainerWithMenu: {
-    pt: "9.5vh",
+    pt: "7vh", //9.5
     pl: "4vw",
     pr: "4vw",
     pb: "5vh",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+  },
+  logo: {
+    height: "7vh", //4.3
+    width: "90vw",
+    objectFit: "contain",
   },
   titleContainer: {
     display: "flex",
@@ -465,11 +470,7 @@ const styles = {
     width: "1.2vh",
     height: "1vh",
   },
-  logo: {
-    height: "4.3vh",
-    width: "90vw",
-    objectFit: "contain",
-  },
+
   caretLeft: {
     width: "3vh",
     height: "3vh",
