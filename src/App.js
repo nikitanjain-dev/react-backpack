@@ -408,8 +408,8 @@ const styles = {
     overflowX: "auto",
   },
   menuIconContainer: {
-    minWidth: "14vw",
-    width: "14vw",
+    minWidth: "13.5vw",
+    width: "13.5vw",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",

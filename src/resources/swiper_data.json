@@ -59,6 +59,7 @@
       "url": null
     }
   },
+
   {
     "logoName": "atlantic_records_logo.png",
     "title": {
@@ -69,9 +70,9 @@
       "text": "Enter every 24 hours for free giveaways from your favorite artists and brands",
       "color": "#0F1B33"
     },
-    "imageName": "airpods.png",
+    "imageName": "tickes.png",
     "backgroundColor": "#82D6C3",
-    "itemIcon": "headphone_icon.png",
+    "itemIcon": "tickets_icon.png",
     "button": {
       "title": "I NEED THIS",
       "backgroundColor": "#0F1B33",
@@ -89,9 +90,9 @@
       "text": "Enter once a day to win this month’s AirPods Pro giveaway",
       "color": "#FFF"
     },
-    "imageName": "tickes.png",
+    "imageName": "airpods.png",
     "backgroundColor": "#234155",
-    "itemIcon": "tickets_icon.png",
+    "itemIcon": "headphone_icon.png",
     "button": {
       "title": "I WANT IT",
       "backgroundColor": "#FFF",
@@ -111,7 +112,7 @@
     },
     "imageName": "instax_camera.png",
     "backgroundColor": "#1888AB",
-    "itemIcon": "basketball_icon.png",
+    "itemIcon": "camera_icon.png",
     "button": {
       "title": "GIMME",
       "backgroundColor": "#FFF",
