@@ -3,6 +3,8 @@ import { Box, Typography, Button, CircularProgress } from "@mui/material";
 import SwipeableViews from "react-swipeable-views-react-18-fix";
 import "./App.css";
 import { Helmet } from "react-helmet";
+import ReactPlayer from "react-player";
+import zeemeeVideo from "./assets/videos/zeemee_intro_video.mp4";
 
 import { colors } from "./settings/theme.js";
 const swiperData = require("./resources/swiper_data.json");
@@ -14,6 +16,7 @@ function App() {
   const [scrolEnd, setscrolEnd] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
   const [data, setData] = useState([]);
+  const [showProductData, setShowProductData] = useState(false);
 
   /** setting data */
   useEffect(() => {
@@ -203,7 +206,59 @@ function App() {
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
         />
       </Helmet>
-      {data && data.length > 0 ? (
+      {!showProductData ? (
+        <>
+          <div className="player-wrapper">
+            <ReactPlayer
+              url={zeemeeVideo}
+              className="react-player"
+              playing={true}
+              muted
+              width="100%"
+              height="100%"
+              controls={false}
+              style={{ resizeMode: "cover" }}
+              onEnded={() => {
+                setShowProductData(true);
+              }}
+            />
+          </div>
+          {/* <video
+            autoPlay
+            source={require(`./assets/videos/zeemee_intro_video.mp4`)}
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              alignItems: "stretch",
+              bottom: 0,
+              right: 0,
+              height: "90%",
+            }}
+            // resizeMode="cover"
+            // repeat={true}
+          /> */}
+
+          {/* <video
+            loop
+            autoPlay
+            resizeMode="cover"
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              alignItems: "stretch",
+              bottom: 0,
+              right: 0,
+              height: "100%",
+            }}
+          >
+            <source src={zeemeeVideo} type="video/mp4" />
+            Your browser does not support the video tag. I suggest you upgrade
+            your browser.
+          </video> */}
+        </>
+      ) : data && data.length > 0 ? (
         <>
           <SwipeableViews index={activeStep} onChangeIndex={handleStepChange}>
             {data.map((data, index) => (
