@@ -238,7 +238,7 @@ function App() {
             }}
             onPlay={() => {
               console.log(showSpinner, "onPlay");
-              setShowSpinner(true);
+              setShowSpinner(false);
             }}
             onBuffer={() => {
               console.log(showSpinner);
