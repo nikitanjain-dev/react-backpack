@@ -59,16 +59,35 @@
   animation: fadeIn 0.5s ease-in-out 0.5s forwards;
 }
 
-.player-wrapper {
-  position: relative;
-  width: 100vw;
-  height: 100vh;
-  /* padding-top: 100%; */
-  /* flex: 1; */
+.content div {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  left: -100px;
+  width: 30%;
+  background: linear-gradient(to right, #e2e9f6, transparent 50%);
+  -webkit-text-fill-color: transparent;
+  animation: shine 2.5s ease-in-out infinite;
+  overflow: hidden;
+}
+
+@keyframes shine {
+  0% {
+    left: -10%;
+  }
+  100% {
+    left: 110%;
+  }
 }
 
 .react-player {
   position: absolute;
   top: 0;
   left: 0;
+}
+
+video {
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
 }

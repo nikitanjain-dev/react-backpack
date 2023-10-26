@@ -23,6 +23,21 @@ function App() {
     setData(swiperData);
   }, []);
 
+  useEffect(() => {
+    {
+      swiperData.map((item, index) => {
+        const img = new Image();
+        img.src = require(`./assets/images/${item?.logoName}`);
+        console.log(img);
+        img.onload = () => {
+          swiperData[index].logoWidth = img.width;
+          swiperData[index].logoHeight = img.height;
+        };
+        setData([...swiperData]);
+      });
+    }
+  }, []);
+
   /**
    * @method handleStepChange
    * @description Updating state on scroll
@@ -208,55 +223,19 @@ function App() {
       </Helmet>
       {!showProductData ? (
         <>
-          <div className="player-wrapper">
-            <ReactPlayer
-              url={zeemeeVideo}
-              className="react-player"
-              playing={true}
-              muted
-              width="100%"
-              height="100%"
-              controls={false}
-              style={{ resizeMode: "cover" }}
-              onEnded={() => {
-                setShowProductData(true);
-              }}
-            />
-          </div>
-          {/* <video
-            autoPlay
-            source={require(`./assets/videos/zeemee_intro_video.mp4`)}
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              alignItems: "stretch",
-              bottom: 0,
-              right: 0,
-              height: "90%",
+          <ReactPlayer
+            url={zeemeeVideo}
+            className="react-player"
+            playing={true}
+            muted
+            width={"100vw"}
+            height={"100vh"}
+            controls={false}
+            style={{ resizeMode: "cover", objectFit: "cover" }}
+            onEnded={() => {
+              setShowProductData(true);
             }}
-            // resizeMode="cover"
-            // repeat={true}
-          /> */}
-
-          {/* <video
-            loop
-            autoPlay
-            resizeMode="cover"
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              alignItems: "stretch",
-              bottom: 0,
-              right: 0,
-              height: "100%",
-            }}
-          >
-            <source src={zeemeeVideo} type="video/mp4" />
-            Your browser does not support the video tag. I suggest you upgrade
-            your browser.
-          </video> */}
+          />
         </>
       ) : data && data.length > 0 ? (
         <>
@@ -286,13 +265,24 @@ function App() {
                         src={require(`./assets/images/${data?.logoName}`)}
                       />
                     </Box>
-                    <Box
-                      component="img"
-                      alt="Image"
-                      sx={styles.introImage}
-                      src={require(`./assets/images/${data?.imageName}`)}
-                    />
-                    <Box sx={styles.introButtonContainer}>
+                    <div
+                      style={{
+                        position: "fixed",
+                        top: 0,
+                        height: "100vh",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <Box
+                        component="img"
+                        alt="Image"
+                        sx={styles.introImage}
+                        src={require(`./assets/images/${data?.imageName}`)}
+                      />
+                    </div>
+                    <Box sx={styles.introButtonContainer} className="content">
                       <Typography sx={styles.introButtonTitle}>
                         {data?.button?.title ?? ""}
                       </Typography>
@@ -302,6 +292,7 @@ function App() {
                         alt="RightArrow"
                         src={require(`./assets/images/right_arrow.png`)}
                       />
+                      <div></div>
                     </Box>
                   </Box>
                 ) : (
@@ -312,7 +303,16 @@ function App() {
                           <Box
                             component="img"
                             alt="Logo"
-                            sx={styles.logo}
+                            sx={[
+                              styles.logo,
+                              {
+                                height: data?.logoWidth
+                                  ? data?.logoWidth / data.logoHeight > 2
+                                    ? "4.26vh"
+                                    : "10vh"
+                                  : "7vh",
+                              },
+                            ]}
                             src={require(`./assets/images/${data?.logoName}`)}
                           />
                           <Box sx={styles.titleContainer}>
@@ -339,12 +339,23 @@ function App() {
                               {data?.subTitle?.text ?? ""}
                             </Typography>
                           </Box>
-                          <Box
-                            component="img"
-                            alt="Image"
-                            sx={[styles.image]}
-                            src={require(`./assets/images/${data?.imageName}`)}
-                          />
+                          <div
+                            style={{
+                              position: "fixed",
+                              top: 0,
+                              height: "100vh",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                            }}
+                          >
+                            <Box
+                              component="img"
+                              alt="Image"
+                              sx={[styles.image]}
+                              src={require(`./assets/images/${data?.imageName}`)}
+                            />
+                          </div>
                           <Button
                             sx={[
                               styles.button,
@@ -387,7 +398,6 @@ function App() {
 const styles = {
   container: {
     height: "100vh",
-    backgroundColor: "red",
     display: "flex",
     flexDirection: "column",
     placeItems: "center",
@@ -415,10 +425,11 @@ const styles = {
     pr: "3vw",
   },
   title: {
-    fontSize: "3.8vh",
+    fontSize: "4.02vh",
     fontWeight: "600",
     fontFamily: "Roboto Regular",
-    lineHeight: "4.5vh",
+    lineHeight: "4.7vh",
+    letterSpacing: "inherit",
   },
   subtitleConttainer: {
     display: "flex",
@@ -428,20 +439,22 @@ const styles = {
     pr: "3vw",
   },
   subtitle: {
-    fontSize: "1.9vh",
+    fontSize: "2.36vh",
     fontWeight: "400",
     fontFamily: "Roboto Regular",
-    lineHeight: "2.9vh",
+    lineHeight: "3.31vh",
+    letterSpacing: "inherit",
   },
   image: {
-    mt: "3.8vh",
     height: "32vh",
     width: "90vw",
     objectFit: "contain",
   },
 
   button: {
-    mt: "3.8vh",
+    // mt: "3.8vh",
+    position: "fixed",
+    bottom: "22vh",
     pt: "1.9vh",
     pb: "1.9vh",
     minWidth: "60vw",
@@ -480,37 +493,43 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    justifyContent: "center",
+    // justifyContent: "center",
     ml: "24px",
     mr: "24px",
   },
-  introTitleContainer: { display: "flex", flexDirection: "column" },
+  introTitleContainer: { pt: "7vh", display: "flex", flexDirection: "column" },
   introTitle: {
-    fontSize: "5.7vh",
+    fontSize: "6.5vh",
     fontWeight: "900",
     fontFamily: "Roboto Black",
-    lineHeight: "5.3vh",
+    lineHeight: "6.0vh",
     color: colors.black,
   },
   introLogo: {
-    height: "3.8vh",
+    height: "4.3vh",
     width: "auto",
     objectFit: "contain",
     alignSelf: "end",
   },
   introImage: {
-    mt: "3.8vh",
+    // mt: "3.8vh",
     height: "44vh",
     width: "auto",
     objectFit: "contain",
   },
   introButtonContainer: {
+    position: "fixed",
+    bottom: "9.6vh",
     display: "flex",
     flexDirection: "row",
     textAlign: "center",
     alignItems: "center",
     justifyContent: "center",
-    mt: "6.1vh",
+    pt: "1.9vh",
+    pb: "1.9vh",
+    minWidth: "60vw",
+    borderRadius: "4.8vh",
+    backgroundColor: colors.white,
   },
   introButtonTitle: {
     fontSize: "2vh",
@@ -518,7 +537,7 @@ const styles = {
     fontWeight: "700",
     fontFamily: "Roboto Bold",
     mr: "2vw",
-    lineHeight: "2.99vh",
+    lineHeight: "2.9vh",
     letterSpacing: "0.2vh",
   },
   rightArrow: {
