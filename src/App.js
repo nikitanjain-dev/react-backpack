@@ -10,8 +10,12 @@ import { colors } from "./settings/theme.js";
 const swiperData = require("./resources/swiper_data.json");
 
 function App() {
+  let backpackViewedCount = window?.BridgeApi?.getStoredInteger(
+    "backpack_viewed_count"
+  );
   let scrollRef = useRef(null);
   let menuIconRef = useRef(null);
+
   const [scrollX, setscrollX] = useState(0);
   const [scrolEnd, setscrolEnd] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
@@ -241,7 +245,7 @@ function App() {
               setShowSpinner(false);
             }}
             onBuffer={() => {
-              console.log(showSpinner);
+              console.log(showSpinner, "onBuffer");
               setShowSpinner(true);
             }}
           ></ReactPlayer>
@@ -291,17 +295,18 @@ function App() {
                         src={require(`./assets/images/${data?.imageName}`)}
                       />
                     </div>
-                    <Box sx={styles.introButtonContainer} className="content">
-                      <Typography sx={styles.introButtonTitle}>
-                        {data?.button?.title ?? ""}
-                      </Typography>
-                      <Box
-                        component="img"
-                        sx={styles.rightArrow}
-                        alt="RightArrow"
-                        src={require(`./assets/images/right_arrow.png`)}
-                      />
-                      <div></div>
+                    <Box href="#" sx={styles.introButtonContainer}>
+                      <Box class="button button-anim">
+                        <Typography sx={styles.introButtonTitle}>
+                          {data?.button?.title ?? ""}
+                        </Typography>
+                        <Box
+                          component="img"
+                          sx={styles.rightArrow}
+                          alt="RightArrow"
+                          src={require(`./assets/images/right_arrow.png`)}
+                        />
+                      </Box>
                     </Box>
                   </Box>
                 ) : (
@@ -529,20 +534,20 @@ const styles = {
   introButtonContainer: {
     position: "fixed",
     bottom: "9.6vh",
-    display: "flex",
-    flexDirection: "row",
-    textAlign: "center",
-    alignItems: "center",
-    justifyContent: "center",
-    pt: "1.9vh",
-    pb: "1.9vh",
-    minWidth: "60vw",
-    borderRadius: "4.8vh",
-    backgroundColor: colors.white,
+    // display: "flex",
+    // flexDirection: "row",
+    // textAlign: "center",
+    // alignItems: "center",
+    // justifyContent: "center",
+    // pt: "1.9vh",
+    // pb: "1.9vh",
+    // minWidth: "60vw",
+    // borderRadius: "4.8vh",
+    // backgroundColor: colors.black,
   },
   introButtonTitle: {
     fontSize: "2vh",
-    color: colors.black,
+    color: colors.white,
     fontWeight: "700",
     fontFamily: "Roboto Bold",
     mr: "2vw",
@@ -550,8 +555,8 @@ const styles = {
     letterSpacing: "0.2vh",
   },
   rightArrow: {
-    width: "1.2vh",
-    height: "1vh",
+    width: "2.2vh",
+    height: "2vh",
   },
 
   caretLeft: {

@@ -59,35 +59,61 @@
   animation: fadeIn 0.5s ease-in-out 0.5s forwards;
 }
 
-.content div {
-  position: absolute;
-  top: 0;
-  height: 100%;
-  left: -100px;
-  width: 30%;
-  background: linear-gradient(to right, #e2e9f6, transparent 50%);
-  -webkit-text-fill-color: transparent;
-  animation: shine 2.5s ease-in-out infinite;
-  overflow: hidden;
-}
-
-@keyframes shine {
-  0% {
-    left: -10%;
-  }
-  100% {
-    left: 110%;
-  }
-}
-
 .react-player {
   position: absolute;
   top: 0;
   left: 0;
+  overflow-y: hidden;
 }
 
 video {
   width: 100vw;
   height: 100vh;
   object-fit: cover;
+}
+
+.button {
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  padding-top: 1.9vh;
+  padding-bottom: 1.9vh;
+  min-width: 60vw;
+  border-radius: 4.8vh;
+  background-color: black;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 30%;
+    height: 100%;
+    background: linear-gradient(
+      120deg,
+      transparent,
+      rgba(226, 233, 246, 0.5),
+      transparent
+    );
+  }
+}
+
+.button-anim {
+  &::before {
+    animation: shines 4s ease-in-out infinite;
+  }
+}
+
+@keyframes shines {
+  0% {
+    left: -100%;
+    transition-property: left;
+  }
+  11.5044247788%,
+  100% {
+    left: 100%;
+    transition-property: left;
+  }
 }
