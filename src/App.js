@@ -17,6 +17,7 @@ function App() {
   const [activeStep, setActiveStep] = useState(0);
   const [data, setData] = useState([]);
   const [showProductData, setShowProductData] = useState(false);
+  const [showSpinner, setShowSpinner] = useState(false);
 
   /** setting data */
   useEffect(() => {
@@ -223,19 +224,25 @@ function App() {
       </Helmet>
       {!showProductData ? (
         <>
-          <ReactPlayer
-            url={zeemeeVideo}
-            className="react-player"
-            playing={true}
-            muted
-            width={"100vw"}
-            height={"100vh"}
-            controls={false}
-            style={{ resizeMode: "cover", objectFit: "cover" }}
-            onEnded={() => {
-              setShowProductData(true);
-            }}
-          />
+          {showSpinner ? (
+            renderLoader()
+          ) : (
+            <ReactPlayer
+              url={zeemeeVideo}
+              className="react-player"
+              playing={true}
+              muted
+              width={"100vw"}
+              height={"100vh"}
+              controls={false}
+              style={{ resizeMode: "cover", objectFit: "cover" }}
+              onEnded={() => {
+                setShowProductData(true);
+              }}
+              onPlay={() => setShowSpinner(false)}
+              onBuffer={() => setShowSpinner(true)}
+            />
+          )}
         </>
       ) : data && data.length > 0 ? (
         <>
