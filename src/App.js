@@ -17,7 +17,7 @@ function App() {
   const [activeStep, setActiveStep] = useState(0);
   const [data, setData] = useState([]);
   const [showProductData, setShowProductData] = useState(false);
-  const [showSpinner, setShowSpinner] = useState(false);
+  const [showSpinner, setShowSpinner] = useState(true);
 
   /** setting data */
   useEffect(() => {
@@ -29,7 +29,6 @@ function App() {
       swiperData.map((item, index) => {
         const img = new Image();
         img.src = require(`./assets/images/${item?.logoName}`);
-        console.log(img);
         img.onload = () => {
           swiperData[index].logoWidth = img.width;
           swiperData[index].logoHeight = img.height;
@@ -224,25 +223,28 @@ function App() {
       </Helmet>
       {!showProductData ? (
         <>
-          {showSpinner ? (
-            renderLoader()
-          ) : (
-            <ReactPlayer
-              url={zeemeeVideo}
-              className="react-player"
-              playing={true}
-              muted
-              width={"100vw"}
-              height={"100vh"}
-              controls={false}
-              style={{ resizeMode: "cover", objectFit: "cover" }}
-              onEnded={() => {
-                setShowProductData(true);
-              }}
-              onPlay={() => setShowSpinner(false)}
-              onBuffer={() => setShowSpinner(true)}
-            />
-          )}
+          {showSpinner && renderLoader()}
+          <ReactPlayer
+            url={zeemeeVideo}
+            className="react-player"
+            playing={true}
+            muted
+            width={"100vw"}
+            height={"100vh"}
+            controls={false}
+            style={{ resizeMode: "cover", objectFit: "cover" }}
+            onEnded={() => {
+              setShowProductData(true);
+            }}
+            onPlay={() => {
+              console.log(showSpinner, "onPlay");
+              setShowSpinner(true);
+            }}
+            onBuffer={() => {
+              console.log(showSpinner);
+              setShowSpinner(true);
+            }}
+          ></ReactPlayer>
         </>
       ) : data && data.length > 0 ? (
         <>
