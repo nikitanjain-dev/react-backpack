@@ -296,7 +296,7 @@ function App() {
                       />
                     </div>
                     <Box href="#" sx={styles.introButtonContainer}>
-                      <Box class="button button-anim">
+                      <Box className="button button-anim">
                         <Typography sx={styles.introButtonTitle}>
                           {data?.button?.title ?? ""}
                         </Typography>
