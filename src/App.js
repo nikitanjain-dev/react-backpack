@@ -28,6 +28,7 @@ function App() {
     setData(swiperData);
   }, []);
 
+  /** setting images width height data */
   useEffect(() => {
     {
       swiperData.map((item, index) => {
@@ -230,7 +231,7 @@ function App() {
           {showSpinner && renderLoader()}
           <ReactPlayer
             url={zeemeeVideo}
-            playsInline={true}
+            playsinline
             className="react-player"
             playing={true}
             muted
@@ -296,7 +297,7 @@ function App() {
                         src={require(`./assets/images/${data?.imageName}`)}
                       />
                     </div>
-                    <Box href="#" sx={styles.introButtonContainer}>
+                    <Box sx={styles.introButtonContainer}>
                       <Box className="button button-anim">
                         <Typography sx={styles.introButtonTitle}>
                           {data?.button?.title ?? ""}
@@ -321,11 +322,12 @@ function App() {
                             sx={[
                               styles.logo,
                               {
-                                height: data?.logoWidth
-                                  ? data?.logoWidth / data.logoHeight > 2
-                                    ? "4.26vh"
-                                    : "10vh"
-                                  : "7vh",
+                                height:
+                                  data?.logoWidth && data.logoWidth > 0
+                                    ? data?.logoWidth / data.logoHeight > 2
+                                      ? "4.26vh"
+                                      : "10vh"
+                                    : "7vh",
                               },
                             ]}
                             src={require(`./assets/images/${data?.logoName}`)}
