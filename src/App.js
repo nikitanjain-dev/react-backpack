@@ -230,7 +230,7 @@ function App() {
           {showSpinner && renderLoader()}
           <ReactPlayer
             url={zeemeeVideo}
-            playsInline={true}
+            playsinline
             className="react-player"
             playing={true}
             muted
