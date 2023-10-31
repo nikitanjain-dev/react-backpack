@@ -1,6 +1,10 @@
 .root::-webkit-scrollbar {
   display: none;
 }
+* {
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
 
 body {
   font-family: Roboto Regular;
