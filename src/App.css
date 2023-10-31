@@ -9,7 +9,7 @@ body {
 .bar {
   background-color: #ffffffcc;
   position: fixed;
-  bottom: 10vh;
+  bottom: 6.1vh;
   width: 0%;
   height: 5.9vh;
   left: 8vw;
@@ -86,8 +86,8 @@ video {
   padding-top: 1.9vh;
   padding-bottom: 1.9vh;
   min-width: 60vw;
-  border-radius: 4.8vh;
-  background-color: black;
+  /* border-radius: 4.8vh; */
+  /* background-color: black; */
 
   &::before {
     content: "";
@@ -98,7 +98,7 @@ video {
     background: linear-gradient(
       120deg,
       transparent,
-      rgba(226, 233, 246, 0.5),
+      rgba(226, 233, 246, 1),
       transparent
     );
   }
@@ -106,7 +106,8 @@ video {
 
 .button-anim {
   &::before {
-    animation: shines 4s ease-in-out infinite;
+    animation: shines 10s ease-in-out infinite;
+    /* animation: shines 10s ease-in-out infinite; */
   }
 }
 

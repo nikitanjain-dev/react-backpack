@@ -20,7 +20,7 @@ function App() {
   const [scrolEnd, setscrolEnd] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
   const [data, setData] = useState([]);
-  const [showProductData, setShowProductData] = useState(false);
+  const [showProductData, setShowProductData] = useState(true);
   const [showSpinner, setShowSpinner] = useState(true);
 
   /** setting data */
@@ -262,7 +262,10 @@ function App() {
                 sx={[
                   styles.container,
                   {
-                    background: data?.backgroundColor ?? colors.lavender,
+                    // background: data?.backgroundColor ?? colors.lavender,
+                    backgroundImage: data?.backgroundColor
+                      ? `radial-gradient(circle at center, ${data?.backgroundColor} 5% ,${data?.backgroundColor} 50%)` //#f1e3c4, #F5D38C
+                      : `radial-gradient(circle at center, ${data?.backgroundColor} 5% , ${colors.lavender} 50%)`,
                   },
                 ]}
               >
@@ -325,7 +328,7 @@ function App() {
                                 height:
                                   data?.logoWidth && data.logoWidth > 0
                                     ? data?.logoWidth / data.logoHeight > 2
-                                      ? "4.26vh"
+                                      ? "6vh"
                                       : "10vh"
                                     : "7vh",
                               },
@@ -471,7 +474,7 @@ const styles = {
   button: {
     // mt: "3.8vh",
     position: "fixed",
-    bottom: "22vh",
+    bottom: "16vh",
     pt: "1.9vh",
     pb: "1.9vh",
     minWidth: "60vw",
@@ -536,7 +539,7 @@ const styles = {
   },
   introButtonContainer: {
     position: "fixed",
-    bottom: "9.6vh",
+    bottom: "5.7vh", //7.6
     // display: "flex",
     // flexDirection: "row",
     // textAlign: "center",
@@ -550,7 +553,7 @@ const styles = {
   },
   introButtonTitle: {
     fontSize: "2vh",
-    color: colors.white,
+    color: colors.black,
     fontWeight: "700",
     fontFamily: "Roboto Bold",
     mr: "2vw",
