@@ -296,6 +296,7 @@ function App() {
                       <Box
                         component="img"
                         alt="Image"
+                        aria-disabled
                         sx={styles.introImage}
                         src={require(`./assets/images/${data?.imageName}`)}
                       />
