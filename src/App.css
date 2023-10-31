@@ -106,7 +106,7 @@ video {
 
 .button-anim {
   &::before {
-    animation: shines 10s ease-in-out infinite;
+    animation: shines 5s ease-in-out infinite;
     /* animation: shines 10s ease-in-out infinite; */
   }
 }
@@ -116,7 +116,7 @@ video {
     left: -100%;
     transition-property: left;
   }
-  11.5044247788%,
+  20%,
   100% {
     left: 100%;
     transition-property: left;
