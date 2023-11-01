@@ -262,20 +262,26 @@ function App() {
                 sx={[
                   styles.container,
                   {
-                    // background: data?.backgroundColor ?? colors.lavender,
                     backgroundImage: data?.backgroundColor
-                      ? `radial-gradient(circle at center, ${data?.backgroundColor} 5% ,${data?.backgroundColor} 50%)` //#f1e3c4, #F5D38C
-                      : `radial-gradient(circle at center, ${data?.backgroundColor} 5% , ${colors.lavender} 50%)`,
+                      ? `radial-gradient(circle at center, ${data?.gradiantColor} 5% ,${data?.backgroundColor} 50%)` //#f1e3c4, #F5D38C
+                      : `radial-gradient(circle at center, ${colors?.tropicalLightBlue} 5% , ${colors.tropicalDarkBlue} 50%)`,
                   },
                 ]}
               >
                 {index == 0 ? (
                   <Box sx={styles.introContainer}>
                     <Box sx={styles.introTitleContainer}>
-                      <Typography sx={[styles.introTitle]}>{"YOUR"}</Typography>
-                      <Typography sx={[styles.introTitle]}>
-                        {"BACKPACK"}
-                      </Typography>
+                      <Typography
+                        sx={[
+                          styles.introTitle,
+                          {
+                            color: data?.title?.color ?? colors.black,
+                          },
+                        ]}
+                        dangerouslySetInnerHTML={{
+                          __html: data?.title?.text ?? "",
+                        }}
+                      ></Typography>
                       <Box
                         component="img"
                         alt="Logo"
@@ -283,16 +289,7 @@ function App() {
                         src={require(`./assets/images/${data?.logoName}`)}
                       />
                     </Box>
-                    <div
-                      style={{
-                        position: "fixed",
-                        top: 0,
-                        height: "100vh",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                      }}
-                    >
+                    <div style={styles.introImageContainer}>
                       <Box
                         component="img"
                         alt="Image"
@@ -301,7 +298,28 @@ function App() {
                       />
                     </div>
                     <Box sx={styles.introButtonContainer}>
-                      <Box className="button button-anim">
+                      <Box
+                        className="button-anim"
+                        sx={{
+                          overflow: "hidden",
+                          display: "flex",
+                          flexDirection: "row",
+                          textAlign: "center",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          paddingTop: "1.9vh",
+                          paddingBottom: "1.9vh",
+                          minWidth: "60vw",
+                          "&::before": {
+                            content: `""`,
+                            position: "absolute",
+                            top: 0,
+                            width: "30%",
+                            height: "100%",
+                            background: `linear-gradient(120deg, transparent, ${data.backgroundColor}, transparent)`,
+                          },
+                        }}
+                      >
                         <Typography sx={styles.introButtonTitle}>
                           {data?.button?.title ?? ""}
                         </Typography>
@@ -318,7 +336,19 @@ function App() {
                   <>
                     <Box sx={{ height: "100vh" }}>
                       <Box sx={{ height: "84vh" }}>
-                        <Box sx={[styles.subcontainerWithMenu]}>
+                        <Box
+                          sx={[
+                            styles.subcontainerWithMenu,
+                            {
+                              pt:
+                                data?.logoWidth && data.logoWidth > 0
+                                  ? data?.logoWidth / data.logoHeight > 2
+                                    ? "7vh"
+                                    : "4vh"
+                                  : "7vh",
+                            },
+                          ]}
+                        >
                           <Box
                             component="img"
                             alt="Logo"
@@ -343,9 +373,10 @@ function App() {
                                   color: data?.title?.color ?? colors.black,
                                 },
                               ]}
-                            >
-                              {data?.title?.text ?? ""}
-                            </Typography>
+                              dangerouslySetInnerHTML={{
+                                __html: data?.title?.text ?? "",
+                              }}
+                            ></Typography>
                           </Box>
                           <Box sx={styles.subtitleConttainer}>
                             <Typography
@@ -355,9 +386,10 @@ function App() {
                                   color: data?.subTitle?.color ?? colors.black,
                                 },
                               ]}
-                            >
-                              {data?.subTitle?.text ?? ""}
-                            </Typography>
+                              dangerouslySetInnerHTML={{
+                                __html: data?.subTitle?.text ?? "",
+                              }}
+                            ></Typography>
                           </Box>
                           <div
                             style={{
@@ -450,13 +482,18 @@ const styles = {
     fontFamily: "Roboto Regular",
     lineHeight: "4.7vh",
     letterSpacing: "inherit",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    display: "-webkit-box",
+    WebkitLineClamp: "2",
+    WebkitBoxOrient: "vertical",
   },
   subtitleConttainer: {
     display: "flex",
     textAlign: "center",
     mt: "1vh",
-    pl: "3vw",
-    pr: "3vw",
+    // pl: "1vw",
+    // pr: "1vw",
   },
   subtitle: {
     fontSize: "2.36vh",
@@ -464,8 +501,14 @@ const styles = {
     fontFamily: "Roboto Regular",
     lineHeight: "3.31vh",
     letterSpacing: "inherit",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    display: "-webkit-box",
+    WebkitLineClamp: "2",
+    WebkitBoxOrient: "vertical",
   },
   image: {
+    // marginTop: "7vh",
     height: "32vh",
     width: "90vw",
     objectFit: "contain",
@@ -526,20 +569,28 @@ const styles = {
     color: colors.black,
   },
   introLogo: {
-    height: "4.3vh",
+    height: "4.6vh",
     width: "auto",
     objectFit: "contain",
     alignSelf: "end",
   },
+  introImageContainer: {
+    position: "fixed",
+    top: 0,
+    height: "100vh",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
   introImage: {
     // mt: "3.8vh",
-    height: "44vh",
+    height: "45vh",
     width: "auto",
     objectFit: "contain",
   },
   introButtonContainer: {
     position: "fixed",
-    bottom: "5.7vh", //7.6
+    bottom: "5.7vh",
     // display: "flex",
     // flexDirection: "row",
     // textAlign: "center",
@@ -552,11 +603,11 @@ const styles = {
     // backgroundColor: colors.black,
   },
   introButtonTitle: {
-    fontSize: "2vh",
+    fontSize: "2.2vh",
     color: colors.black,
     fontWeight: "700",
     fontFamily: "Roboto Bold",
-    mr: "2vw",
+    mr: "2.5vw",
     lineHeight: "2.9vh",
     letterSpacing: "0.2vh",
   },

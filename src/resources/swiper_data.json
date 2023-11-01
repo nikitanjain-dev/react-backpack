@@ -2,15 +2,16 @@
   {
     "logoName": "powered.png",
     "title": {
-      "text": null,
-      "color": null
+      "text": "YOUR <br/>BACKPACK",
+      "color": "#0F1B33"
     },
     "subTitle": {
       "text": null,
       "color": null
     },
-    "imageName": "bag.png",
-    "backgroundColor": "#E2E9F6",
+    "imageName": "bag.webp",
+    "backgroundColor": "#B7C8E7",
+    "gradiantColor": "#FBFCFF",
     "itemIcon": "bag.png",
     "button": {
       "title": "SWIPE TO OPEN",
@@ -26,11 +27,12 @@
       "color": "#0F1B33"
     },
     "subTitle": {
-      "text": "Plus free perks from Doordash, Calm, and more",
+      "text": "Plus free perks from Doordash, <br />Calm, and more",
       "color": "#0F1B33"
     },
-    "imageName": "books.png",
-    "backgroundColor": "#F6E1B5",
+    "imageName": "books.webp",
+    "backgroundColor": "#F6C67E",
+    "gradiantColor": "#FAEDE1",
     "itemIcon": "book_icon.png",
     "button": {
       "title": "HOOK ME UP",
@@ -42,15 +44,16 @@
   {
     "logoName": "zeemee_logo.png",
     "title": {
-      "text": "$1,000 is a lot of change",
+      "text": "$1,000 is a lot <br />of change",
       "color": "#0F1B33"
     },
     "subTitle": {
-      "text": "Apply for exclusive scholarships every month",
+      "text": "Apply for exclusive scholarships <br />every month",
       "color": "#0F1B33"
     },
-    "imageName": "piggy_bank.png",
-    "backgroundColor": "#AEE3E8",
+    "imageName": "piggy_bank.webp",
+    "backgroundColor": "#A0D2E2",
+    "gradiantColor": "#F7FAFB",
     "itemIcon": "scholarship_icon.png",
     "button": {
       "title": "KA-CHING",
@@ -63,15 +66,16 @@
   {
     "logoName": "atlantic_records_logo.png",
     "title": {
-      "text": "25 days of hot giveaways",
+      "text": "25 days of hot <br />giveaways",
       "color": "#0F1B33"
     },
     "subTitle": {
-      "text": "Enter every 24 hours for free giveaways from your favorite artists and brands",
+      "text": "Enter every 24 hours for free giveaways <br />from your favorite artists and brands",
       "color": "#0F1B33"
     },
-    "imageName": "tickes.png",
-    "backgroundColor": "#82D6C3",
+    "imageName": "atlantic_shadow.webp",
+    "backgroundColor": "#D7D7D7",
+    "gradiantColor": "#FEFDFD",
     "itemIcon": "tickets_icon.png",
     "button": {
       "title": "I NEED THIS",
@@ -81,22 +85,23 @@
     }
   },
   {
-    "logoName": "zeemee_logo_transparent.png",
+    "logoName": "zeemee_logo.png",
     "title": {
       "text": "Listen up",
-      "color": "#FFF"
+      "color": "#0F1B33"
     },
     "subTitle": {
-      "text": "Enter once a day to win this month’s AirPods Pro giveaway",
-      "color": "#FFF"
+      "text": "Enter once a day to win this month’s <br />AirPods Pro giveaway",
+      "color": "#0F1B33"
     },
-    "imageName": "airpods.png",
-    "backgroundColor": "#234155",
+    "imageName": "airpods_shadow.webp",
+    "backgroundColor": "#8CD9C7",
+    "gradiantColor": "#EAFAF6",
     "itemIcon": "headphone_icon.png",
     "button": {
       "title": "I WANT IT",
-      "backgroundColor": "#FFF",
-      "titleColor": "#0F1B33",
+      "backgroundColor": "#0F1B33",
+      "titleColor": "#FFF",
       "url": null
     }
   },
@@ -107,11 +112,12 @@
       "color": "#FFF"
     },
     "subTitle": {
-      "text": "Enter once a day to win this month’s Instax giveaway",
+      "text": "Enter once a day to win this month’s <br />Instax giveaway",
       "color": "#FFF"
     },
-    "imageName": "instax_camera.png",
-    "backgroundColor": "#1888AB",
+    "imageName": "instax_shadow.webp",
+    "backgroundColor": "#CF361F",
+    "gradiantColor": "#FDA68B",
     "itemIcon": "camera_icon.png",
     "button": {
       "title": "GIMME",

@@ -9,4 +9,6 @@ export const colors = {
   white: "#FFF",
   lightGrey: "#E1E6EF",
   white80: "#ffffffcc",
+  tropicalLightBlue: "#FBFCFF",
+  tropicalDarkBlue: "#B7C8E7",
 };
