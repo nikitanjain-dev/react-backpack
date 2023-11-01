@@ -1,6 +1,3 @@
-.root::-webkit-scrollbar {
-  display: none;
-}
 * {
   -webkit-user-select: none;
   -webkit-touch-callout: none;
@@ -8,6 +5,10 @@
 
 body {
   font-family: Roboto Regular;
+}
+
+.root::-webkit-scrollbar {
+  display: none;
 }
 
 .bar {
@@ -83,7 +84,6 @@ video {
 .button-anim {
   &::before {
     animation: shines 5s ease-in-out infinite;
-    /* animation: shines 10s ease-in-out infinite; */
   }
 }
 

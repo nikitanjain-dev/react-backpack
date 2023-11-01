@@ -17,7 +17,8 @@
       "title": "SWIPE TO OPEN",
       "backgroundColor": null,
       "titleColor": null,
-      "url": null
+      "url": null,
+      "isDeepLink": false
     }
   },
   {
@@ -38,7 +39,8 @@
       "title": "HOOK ME UP",
       "backgroundColor": "#0F1B33",
       "titleColor": "#FFF",
-      "url": "https://www.chegg.com/study-pack"
+      "url": "https://www.chegg.com/study-pack",
+      "isDeepLink": false
     }
   },
   {
@@ -59,7 +61,8 @@
       "title": "KA-CHING",
       "backgroundColor": "#0F1B33",
       "titleColor": "#FFF",
-      "url": null
+      "url": "zaptack.com/contests/standard/5506b64c-175d-4862-881e-8f0a8f9f5302/submission",
+      "isDeepLink": false
     }
   },
 
@@ -81,7 +84,8 @@
       "title": "I NEED THIS",
       "backgroundColor": "#0F1B33",
       "titleColor": "#FFF",
-      "url": null
+      "url": "https://AtlanticHoliday.lnk.to/ZeeMee!App",
+      "isDeepLink": false
     }
   },
   {
@@ -102,7 +106,8 @@
       "title": "I WANT IT",
       "backgroundColor": "#0F1B33",
       "titleColor": "#FFF",
-      "url": null
+      "url": "zaptack.com/contests/standard/6ddac548-3680-40eb-9614-296fabff3c53/submission",
+      "isDeepLink": false
     }
   },
   {
@@ -123,7 +128,8 @@
       "title": "GIMME",
       "backgroundColor": "#FFF",
       "titleColor": "#0F1B33",
-      "url": null
+      "url": "zaptack.com/contests/standard/e731079a-ece2-4a39-a559-d5b02c30bf08/submission",
+      "isDeepLink": false
     }
   }
 ]

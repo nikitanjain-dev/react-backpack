@@ -10,6 +10,7 @@ import { colors } from "./settings/theme.js";
 const swiperData = require("./resources/swiper_data.json");
 
 function App() {
+  //we will use this parameter later
   let backpackViewedCount = window?.BridgeApi?.getStoredInteger(
     "backpack_viewed_count"
   );
@@ -107,12 +108,21 @@ function App() {
 
   /**
    * @method onCTAClick
-   * @description It will call a native method to open url in browser
-   *  @param url url to open on button click
+   * @description It will call a native method to open url in browser or open deep link on the basis of routeDeepLink flag
+   * @param url url to open on button click
+   * @param isDeepLink boolean flag to decide which function to call
    */
-  const onCTAClick = (url) => {
+  const onCTAClick = (url, isDeepLink) => {
     if (url) {
-      window?.BridgeApi?.openBrowser(url);
+      if (isDeepLink) {
+        const deepLinkData = {
+          target: "zeemeewebview",
+          target_id: url,
+        };
+        window?.BridgeApi?.routeDeepLink(deepLinkData);
+      } else {
+        window?.BridgeApi?.openBrowser(url);
+      }
     }
   };
 
@@ -204,15 +214,7 @@ function App() {
 
   const renderLoader = () => {
     return (
-      <Box
-        sx={{
-          width: "100vw",
-          height: "100vh",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
+      <Box sx={styles.loaderContainer}>
         <CircularProgress />
       </Box>
     );
@@ -238,16 +240,14 @@ function App() {
             width={"100vw"}
             height={"100vh"}
             controls={false}
-            style={{ resizeMode: "cover", objectFit: "cover" }}
+            style={styles.reactPlayer}
             onEnded={() => {
               setShowProductData(true);
             }}
             onPlay={() => {
-              console.log(showSpinner, "onPlay");
               setShowSpinner(false);
             }}
             onBuffer={() => {
-              console.log(showSpinner, "onBuffer");
               setShowSpinner(true);
             }}
           ></ReactPlayer>
@@ -300,25 +300,14 @@ function App() {
                     <Box sx={styles.introButtonContainer}>
                       <Box
                         className="button-anim"
-                        sx={{
-                          overflow: "hidden",
-                          display: "flex",
-                          flexDirection: "row",
-                          textAlign: "center",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          paddingTop: "1.9vh",
-                          paddingBottom: "1.9vh",
-                          minWidth: "60vw",
-                          "&::before": {
-                            content: `""`,
-                            position: "absolute",
-                            top: 0,
-                            width: "30%",
-                            height: "100%",
-                            background: `linear-gradient(120deg, transparent, ${data.backgroundColor}, transparent)`,
+                        sx={[
+                          styles.shineButton,
+                          {
+                            "&::before": {
+                              background: `linear-gradient(120deg, transparent, ${data.backgroundColor}, transparent)`,
+                            },
                           },
-                        }}
+                        ]}
                       >
                         <Typography sx={styles.introButtonTitle}>
                           {data?.button?.title ?? ""}
@@ -334,8 +323,8 @@ function App() {
                   </Box>
                 ) : (
                   <>
-                    <Box sx={{ height: "100vh" }}>
-                      <Box sx={{ height: "84vh" }}>
+                    <Box sx={styles.productContainer}>
+                      <Box sx={styles.productSubContainer}>
                         <Box
                           sx={[
                             styles.subcontainerWithMenu,
@@ -391,16 +380,7 @@ function App() {
                               }}
                             ></Typography>
                           </Box>
-                          <div
-                            style={{
-                              position: "fixed",
-                              top: 0,
-                              height: "100vh",
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "center",
-                            }}
-                          >
+                          <div style={styles.imageContainer}>
                             <Box
                               component="img"
                               alt="Image"
@@ -425,7 +405,10 @@ function App() {
                               },
                             ]}
                             onClick={() => {
-                              onCTAClick(data?.button?.url);
+                              onCTAClick(
+                                data?.button?.url,
+                                data?.button?.isDeepLink
+                              );
                             }}
                           >
                             {data?.button?.title ?? ""}
@@ -448,6 +431,7 @@ function App() {
 }
 
 const styles = {
+  reactPlayer: { resizeMode: "cover", objectFit: "cover" },
   container: {
     height: "100vh",
     display: "flex",
@@ -455,8 +439,10 @@ const styles = {
     placeItems: "center",
     overflow: "auto",
   },
+  productContainer: { height: "100vh" },
+  productSubContainer: { height: "84vh" },
   subcontainerWithMenu: {
-    pt: "7vh", //9.5
+    pt: "7vh",
     pl: "4vw",
     pr: "4vw",
     pb: "5vh",
@@ -465,7 +451,7 @@ const styles = {
     alignItems: "center",
   },
   logo: {
-    height: "7vh", //4.3
+    height: "7vh",
     width: "90vw",
     objectFit: "contain",
   },
@@ -507,15 +493,21 @@ const styles = {
     WebkitLineClamp: "2",
     WebkitBoxOrient: "vertical",
   },
+  imageContainer: {
+    position: "fixed",
+    top: 0,
+    height: "100vh",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
   image: {
-    // marginTop: "7vh",
     height: "32vh",
     width: "90vw",
     objectFit: "contain",
   },
 
   button: {
-    // mt: "3.8vh",
     position: "fixed",
     bottom: "16vh",
     pt: "1.9vh",
@@ -556,7 +548,6 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    // justifyContent: "center",
     ml: "24px",
     mr: "24px",
   },
@@ -583,7 +574,6 @@ const styles = {
     justifyContent: "center",
   },
   introImage: {
-    // mt: "3.8vh",
     height: "45vh",
     width: "auto",
     objectFit: "contain",
@@ -591,16 +581,25 @@ const styles = {
   introButtonContainer: {
     position: "fixed",
     bottom: "5.7vh",
-    // display: "flex",
-    // flexDirection: "row",
-    // textAlign: "center",
-    // alignItems: "center",
-    // justifyContent: "center",
-    // pt: "1.9vh",
-    // pb: "1.9vh",
-    // minWidth: "60vw",
-    // borderRadius: "4.8vh",
-    // backgroundColor: colors.black,
+  },
+  shineButton: {
+    overflow: "hidden",
+    display: "flex",
+    flexDirection: "row",
+    textAlign: "center",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingTop: "1.9vh",
+    paddingBottom: "1.9vh",
+    minWidth: "60vw",
+    "&::before": {
+      content: `""`,
+      position: "absolute",
+      top: 0,
+      width: "30%",
+      height: "100%",
+      background: `linear-gradient(120deg, transparent, ${colors.tropicalDarkBlue}, transparent)`,
+    },
   },
   introButtonTitle: {
     fontSize: "2.2vh",
@@ -615,7 +614,6 @@ const styles = {
     width: "2.2vh",
     height: "2vh",
   },
-
   caretLeft: {
     width: "3vh",
     height: "3vh",
@@ -623,6 +621,13 @@ const styles = {
   itemIcon: {
     width: "4vh",
     height: "4vh",
+  },
+  loaderContainer: {
+    width: "100vw",
+    height: "100vh",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   },
 };
 
