@@ -7,7 +7,7 @@ import ReactPlayer from "react-player";
 import zeemeeVideo from "./assets/videos/zeemee_intro_video.mp4";
 
 import { colors } from "./settings/theme.js";
-const swiperData = require("./resources/swiper_data.json");
+import { data as swiperData } from "./resources/swiper_data.js";
 
 function App() {
   //we will use this parameter later
@@ -23,6 +23,14 @@ function App() {
   const [data, setData] = useState([]);
   const [showProductData, setShowProductData] = useState(true);
   const [showSpinner, setShowSpinner] = useState(true);
+
+  /** identify user to analytics */
+  useEffect(() => {
+    const id = window.BridgeApi?.getUserUuid();
+    window.analytics?.identify(id, { uuid: id });
+    // TODO: Will need to adjust this when we get the animation in there
+    window.analytics?.track("Backpack Default Screen Viewed");
+  }, []);
 
   /** setting data */
   useEffect(() => {
@@ -50,6 +58,12 @@ function App() {
    * @param step Updated step
    */
   const handleStepChange = (step) => {
+    if (step > 0) {
+      window.analytics?.track("Backpack Offer Viewed", {
+        offer: data[step].offerName,
+        order: step,
+      });
+    }
     setActiveStep(step);
   };
 
@@ -113,13 +127,18 @@ function App() {
    * @param isDeepLink boolean flag to decide which function to call
    */
   const onCTAClick = (url, isDeepLink) => {
+    window.analytics?.track("Backpack CTA Clicked", {
+      offer: data[activeStep].offerName,
+      order: activeStep,
+    });
+
     if (url) {
       if (isDeepLink) {
         const deepLinkData = {
           target: "zeemeewebview",
           target_id: url,
         };
-        window?.BridgeApi?.routeDeepLink(deepLinkData);
+        window?.BridgeApi?.routeDeepLink(JSON.stringify(deepLinkData));
       } else {
         window?.BridgeApi?.openBrowser(url);
       }
@@ -220,6 +239,207 @@ function App() {
     );
   };
 
+  const renderAnimation = () => {
+    return (
+      <>
+        {showSpinner && renderLoader()}
+        <ReactPlayer
+          url={zeemeeVideo}
+          playsinline
+          className="react-player"
+          playing={true}
+          muted
+          width={"100vw"}
+          height={"100vh"}
+          controls={false}
+          style={styles.reactPlayer}
+          onEnded={() => {
+            setShowProductData(true);
+          }}
+          onPlay={() => {
+            setShowSpinner(false);
+          }}
+          onBuffer={() => {
+            setShowSpinner(true);
+          }}
+        ></ReactPlayer>
+      </>
+    );
+  };
+
+  const renderBackpackContents = () => {
+    return (
+      <>
+        <SwipeableViews index={activeStep} onChangeIndex={handleStepChange}>
+          {data.map((data, index) => (
+            <Box
+              key={index}
+              className="root"
+              sx={[
+                styles.container,
+                {
+                  backgroundImage: data?.backgroundColor
+                    ? `radial-gradient(circle at 50% 55%, ${data?.gradiantColor} 5% ,${data?.backgroundColor} 50%)` //#f1e3c4, #F5D38C
+                    : `radial-gradient(circle at 50% 55%, ${colors?.tropicalLightBlue} 5% , ${colors.tropicalDarkBlue} 50%)`,
+                },
+              ]}
+            >
+              {index == 0 ? (
+                <Box sx={styles.introContainer}>
+                  <Box sx={styles.introTitleContainer}>
+                    <Typography
+                      sx={[
+                        styles.introTitle,
+                        {
+                          color: data?.title?.color ?? colors.black,
+                        },
+                      ]}
+                      dangerouslySetInnerHTML={{
+                        __html: data?.title?.text ?? "",
+                      }}
+                    ></Typography>
+                    <Box
+                      component="img"
+                      alt="Logo"
+                      sx={styles.introLogo}
+                      src={require(`./assets/images/${data?.logoName}`)}
+                    />
+                  </Box>
+                  <div style={styles.introImageContainer}>
+                    <Box
+                      component="img"
+                      alt="Image"
+                      sx={styles.introImage}
+                      src={require(`./assets/images/${data?.imageName}`)}
+                    />
+                  </div>
+                  <Box sx={styles.introButtonContainer}>
+                    <Box
+                      className="button-anim"
+                      sx={[
+                        styles.shineButton,
+                        {
+                          "&::before": {
+                            background: `linear-gradient(120deg, transparent, ${data.backgroundColor}, transparent)`,
+                          },
+                        },
+                      ]}
+                    >
+                      <Typography sx={styles.introButtonTitle}>
+                        {data?.button?.title ?? ""}
+                      </Typography>
+                      <Box
+                        component="img"
+                        sx={styles.rightArrow}
+                        alt="RightArrow"
+                        src={require(`./assets/images/right_arrow.png`)}
+                      />
+                    </Box>
+                  </Box>
+                </Box>
+              ) : (
+                <>
+                  <Box sx={styles.productContainer}>
+                    <Box sx={styles.productSubContainer}>
+                      <Box
+                        sx={[
+                          styles.subcontainerWithMenu,
+                          {
+                            pt:
+                              data?.logoWidth && data.logoWidth > 0
+                                ? data?.logoWidth / data.logoHeight > 2
+                                  ? "10vh"
+                                  : "8vh"
+                                : "10vh",
+                          },
+                        ]}
+                      >
+                        <Box
+                          component="img"
+                          alt="Logo"
+                          sx={[
+                            styles.logo,
+                            {
+                              height:
+                                data?.logoWidth && data.logoWidth > 0
+                                  ? data?.logoWidth / data.logoHeight > 2
+                                    ? "6vh"
+                                    : "10vh"
+                                  : "7vh",
+                            },
+                          ]}
+                          src={require(`./assets/images/${data?.logoName}`)}
+                        />
+                        <Box sx={styles.titleContainer}>
+                          <Typography
+                            sx={[
+                              styles.title,
+                              {
+                                color: data?.title?.color ?? colors.black,
+                              },
+                            ]}
+                            dangerouslySetInnerHTML={{
+                              __html: data?.title?.text ?? "",
+                            }}
+                          ></Typography>
+                        </Box>
+                        <Box sx={styles.subtitleConttainer}>
+                          <Typography
+                            sx={[
+                              styles.subtitle,
+                              {
+                                color: data?.subTitle?.color ?? colors.black,
+                              },
+                            ]}
+                            dangerouslySetInnerHTML={{
+                              __html: data?.subTitle?.text ?? "",
+                            }}
+                          ></Typography>
+                        </Box>
+                        <div style={styles.imageContainer}>
+                          <Box
+                            component="img"
+                            alt="Image"
+                            sx={[styles.image]}
+                            src={require(`./assets/images/${data?.imageName}`)}
+                          />
+                        </div>
+                        <Button
+                          sx={[
+                            styles.button,
+                            {
+                              backgroundColor:
+                                data?.button?.backgroundColor ?? colors.black,
+                              color: data?.button?.titleColor ?? colors.black,
+                              ":hover": {
+                                backgroundColor:
+                                  data?.button?.backgroundColor ?? colors.black,
+                                color: data?.button?.titleColor ?? colors.black,
+                              },
+                            },
+                          ]}
+                          onClick={() => {
+                            onCTAClick(
+                              data?.button?.url,
+                              data?.button?.isDeepLink
+                            );
+                          }}
+                        >
+                          {data?.button?.title ?? ""}
+                        </Button>
+                      </Box>
+                    </Box>
+                  </Box>
+                </>
+              )}
+            </Box>
+          ))}
+        </SwipeableViews>
+        {renderMenuItems()}
+      </>
+    );
+  };
+
   return (
     <>
       <Helmet>
@@ -228,204 +448,11 @@ function App() {
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
         />
       </Helmet>
-      {!showProductData ? (
-        <>
-          {showSpinner && renderLoader()}
-          <ReactPlayer
-            url={zeemeeVideo}
-            playsinline
-            className="react-player"
-            playing={true}
-            muted
-            width={"100vw"}
-            height={"100vh"}
-            controls={false}
-            style={styles.reactPlayer}
-            onEnded={() => {
-              setShowProductData(true);
-            }}
-            onPlay={() => {
-              setShowSpinner(false);
-            }}
-            onBuffer={() => {
-              setShowSpinner(true);
-            }}
-          ></ReactPlayer>
-        </>
-      ) : data && data.length > 0 ? (
-        <>
-          <SwipeableViews index={activeStep} onChangeIndex={handleStepChange}>
-            {data.map((data, index) => (
-              <Box
-                key={index}
-                className="root"
-                sx={[
-                  styles.container,
-                  {
-                    backgroundImage: data?.backgroundColor
-                      ? `radial-gradient(circle at 50% 55%, ${data?.gradiantColor} 5% ,${data?.backgroundColor} 50%)` //#f1e3c4, #F5D38C
-                      : `radial-gradient(circle at 50% 55%, ${colors?.tropicalLightBlue} 5% , ${colors.tropicalDarkBlue} 50%)`,
-                  },
-                ]}
-              >
-                {index == 0 ? (
-                  <Box sx={styles.introContainer}>
-                    <Box sx={styles.introTitleContainer}>
-                      <Typography
-                        sx={[
-                          styles.introTitle,
-                          {
-                            color: data?.title?.color ?? colors.black,
-                          },
-                        ]}
-                        dangerouslySetInnerHTML={{
-                          __html: data?.title?.text ?? "",
-                        }}
-                      ></Typography>
-                      <Box
-                        component="img"
-                        alt="Logo"
-                        sx={styles.introLogo}
-                        src={require(`./assets/images/${data?.logoName}`)}
-                      />
-                    </Box>
-                    <div style={styles.introImageContainer}>
-                      <Box
-                        component="img"
-                        alt="Image"
-                        sx={styles.introImage}
-                        src={require(`./assets/images/${data?.imageName}`)}
-                      />
-                    </div>
-                    <Box sx={styles.introButtonContainer}>
-                      <Box
-                        className="button-anim"
-                        sx={[
-                          styles.shineButton,
-                          {
-                            "&::before": {
-                              background: `linear-gradient(120deg, transparent, ${data.backgroundColor}, transparent)`,
-                            },
-                          },
-                        ]}
-                      >
-                        <Typography sx={styles.introButtonTitle}>
-                          {data?.button?.title ?? ""}
-                        </Typography>
-                        <Box
-                          component="img"
-                          sx={styles.rightArrow}
-                          alt="RightArrow"
-                          src={require(`./assets/images/right_arrow.png`)}
-                        />
-                      </Box>
-                    </Box>
-                  </Box>
-                ) : (
-                  <>
-                    <Box sx={styles.productContainer}>
-                      <Box sx={styles.productSubContainer}>
-                        <Box
-                          sx={[
-                            styles.subcontainerWithMenu,
-                            {
-                              pt:
-                                data?.logoWidth && data.logoWidth > 0
-                                  ? data?.logoWidth / data.logoHeight > 2
-                                    ? "10vh"
-                                    : "8vh"
-                                  : "10vh",
-                            },
-                          ]}
-                        >
-                          <Box
-                            component="img"
-                            alt="Logo"
-                            sx={[
-                              styles.logo,
-                              {
-                                height:
-                                  data?.logoWidth && data.logoWidth > 0
-                                    ? data?.logoWidth / data.logoHeight > 2
-                                      ? "6vh"
-                                      : "10vh"
-                                    : "7vh",
-                              },
-                            ]}
-                            src={require(`./assets/images/${data?.logoName}`)}
-                          />
-                          <Box sx={styles.titleContainer}>
-                            <Typography
-                              sx={[
-                                styles.title,
-                                {
-                                  color: data?.title?.color ?? colors.black,
-                                },
-                              ]}
-                              dangerouslySetInnerHTML={{
-                                __html: data?.title?.text ?? "",
-                              }}
-                            ></Typography>
-                          </Box>
-                          <Box sx={styles.subtitleConttainer}>
-                            <Typography
-                              sx={[
-                                styles.subtitle,
-                                {
-                                  color: data?.subTitle?.color ?? colors.black,
-                                },
-                              ]}
-                              dangerouslySetInnerHTML={{
-                                __html: data?.subTitle?.text ?? "",
-                              }}
-                            ></Typography>
-                          </Box>
-                          <div style={styles.imageContainer}>
-                            <Box
-                              component="img"
-                              alt="Image"
-                              sx={[styles.image]}
-                              src={require(`./assets/images/${data?.imageName}`)}
-                            />
-                          </div>
-                          <Button
-                            sx={[
-                              styles.button,
-                              {
-                                backgroundColor:
-                                  data?.button?.backgroundColor ?? colors.black,
-                                color: data?.button?.titleColor ?? colors.black,
-                                ":hover": {
-                                  backgroundColor:
-                                    data?.button?.backgroundColor ??
-                                    colors.black,
-                                  color:
-                                    data?.button?.titleColor ?? colors.black,
-                                },
-                              },
-                            ]}
-                            onClick={() => {
-                              onCTAClick(
-                                data?.button?.url,
-                                data?.button?.isDeepLink
-                              );
-                            }}
-                          >
-                            {data?.button?.title ?? ""}
-                          </Button>
-                        </Box>
-                      </Box>
-                    </Box>
-                  </>
-                )}
-              </Box>
-            ))}
-          </SwipeableViews>
-          {renderMenuItems()}
-        </>
-      ) : (
-        renderLoader()
-      )}
+      {!showProductData
+        ? renderAnimation()
+        : data && data.length > 0
+        ? renderBackpackContents()
+        : renderLoader()}
     </>
   );
 }
@@ -494,7 +521,6 @@ const styles = {
     WebkitBoxOrient: "vertical",
   },
   imageContainer: {
-    backgroundColor: "red !important",
     position: "fixed",
     top: "10vh",
     height: "90vh",
