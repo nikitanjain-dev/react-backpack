@@ -263,8 +263,8 @@ function App() {
                   styles.container,
                   {
                     backgroundImage: data?.backgroundColor
-                      ? `radial-gradient(circle at center, ${data?.gradiantColor} 5% ,${data?.backgroundColor} 50%)` //#f1e3c4, #F5D38C
-                      : `radial-gradient(circle at center, ${colors?.tropicalLightBlue} 5% , ${colors.tropicalDarkBlue} 50%)`,
+                      ? `radial-gradient(circle at 50% 55%, ${data?.gradiantColor} 5% ,${data?.backgroundColor} 50%)` //#f1e3c4, #F5D38C
+                      : `radial-gradient(circle at 50% 55%, ${colors?.tropicalLightBlue} 5% , ${colors.tropicalDarkBlue} 50%)`,
                   },
                 ]}
               >
@@ -332,9 +332,9 @@ function App() {
                               pt:
                                 data?.logoWidth && data.logoWidth > 0
                                   ? data?.logoWidth / data.logoHeight > 2
-                                    ? "7vh"
-                                    : "4vh"
-                                  : "7vh",
+                                    ? "10vh"
+                                    : "8vh"
+                                  : "10vh",
                             },
                           ]}
                         >
@@ -494,9 +494,10 @@ const styles = {
     WebkitBoxOrient: "vertical",
   },
   imageContainer: {
+    backgroundColor: "red !important",
     position: "fixed",
-    top: 0,
-    height: "100vh",
+    top: "10vh",
+    height: "90vh",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -551,7 +552,7 @@ const styles = {
     ml: "24px",
     mr: "24px",
   },
-  introTitleContainer: { pt: "7vh", display: "flex", flexDirection: "column" },
+  introTitleContainer: { pt: "10vh", display: "flex", flexDirection: "column" },
   introTitle: {
     fontSize: "6.5vh",
     fontWeight: "900",
@@ -567,8 +568,8 @@ const styles = {
   },
   introImageContainer: {
     position: "fixed",
-    top: 0,
-    height: "100vh",
+    top: "10vh",
+    height: "90vh",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -581,6 +582,7 @@ const styles = {
   introButtonContainer: {
     position: "fixed",
     bottom: "5.7vh",
+    pointerEvents: "none",
   },
   shineButton: {
     overflow: "hidden",
