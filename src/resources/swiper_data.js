@@ -1,3 +1,4 @@
+// first item will contain backpack data here
 export const data = [
   {
     offerName: "",
@@ -13,7 +14,7 @@ export const data = [
     imageName: "bag.webp",
     backgroundColor: "#B7C8E7",
     gradiantColor: "#FBFCFF",
-    itemIcon: "bag.png",
+    itemIcon: null,
     button: {
       title: "SWIPE TO OPEN",
       backgroundColor: null,
@@ -30,7 +31,7 @@ export const data = [
       color: "#0F1B33",
     },
     subTitle: {
-      text: "Plus free perks from Doordash, <br />Calm, and more",
+      text: "Plus perks from Doordash, <br />Calm, and more",
       color: "#0F1B33",
     },
     imageName: "books.webp",
@@ -64,35 +65,34 @@ export const data = [
       title: "KA-CHING",
       backgroundColor: "#0F1B33",
       titleColor: "#FFF",
-      url: "https://www.zaptack.com/contests/standard/5506b64c-175d-4862-881e-8f0a8f9f5302/submission",
+      url: "https://www.zeemee.com/contests/standard/32b7d589-faaf-4d60-a3a2-e09de282d68a/submission",
+      // url: "https://www.zaptack.com/contests/standard/5506b64c-175d-4862-881e-8f0a8f9f5302/submission",
       isDeepLink: true,
     },
   },
-  /*
   {
-    "offerName": "Atlantic Records Daily Giveaway",
-    "logoName": "atlantic_records_logo.png",
-    "title": {
-      "text": "25 weekdays of hot <br />giveaways",
-      "color": "#0F1B33"
+    offerName: "Atlantic Records Daily Giveaway",
+    logoName: "atlantic_records_logo.png",
+    title: {
+      text: "25 weekdays of hot <br />giveaways",
+      color: "#0F1B33",
     },
-    "subTitle": {
-      "text": "Enter every 24 hours for free giveaways <br />from your favorite artists and brands",
-      "color": "#0F1B33"
+    subTitle: {
+      text: "Enter every 24 hours for free giveaways <br />from your favorite artists and brands",
+      color: "#0F1B33",
     },
-    "imageName": "atlantic_shadow.webp",
-    "backgroundColor": "#D7D7D7",
-    "gradiantColor": "#FEFDFD",
-    "itemIcon": "tickets_icon.png",
-    "button": {
-      "title": "I NEED THIS",
-      "backgroundColor": "#0F1B33",
-      "titleColor": "#FFF",
-      "url": "https://AtlanticHoliday.lnk.to/ZeeMee!App",
-      "isDeepLink": false
-    }
+    imageName: "atlantic_shadow.webp",
+    backgroundColor: "#D7D7D7",
+    gradiantColor: "#FEFDFD",
+    itemIcon: "tickets_icon.png",
+    button: {
+      title: "I NEED THIS",
+      backgroundColor: "#0F1B33",
+      titleColor: "#FFF",
+      url: "https://AtlanticHoliday.lnk.to/ZeeMee!App",
+      isDeepLink: false,
+    },
   },
-  */
   {
     offerName: "ZeeMee Airpods Pro Giveaway",
     logoName: "zeemee_logo.png",
@@ -112,7 +112,8 @@ export const data = [
       title: "I WANT IT",
       backgroundColor: "#0F1B33",
       titleColor: "#FFF",
-      url: "https://www.zaptack.com/contests/standard/6ddac548-3680-40eb-9614-296fabff3c53/submission",
+      url: "https://www.zeemee.com/contests/standard/e76719fa-f944-4bbf-99ad-3fa36ce19e23/submission",
+      // url: "https://www.zaptack.com/contests/standard/6ddac548-3680-40eb-9614-296fabff3c53/submission",
       isDeepLink: true,
     },
   },
@@ -135,7 +136,32 @@ export const data = [
       title: "GIMME",
       backgroundColor: "#FFF",
       titleColor: "#0F1B33",
-      url: "https://www.zaptack.com/contests/standard/e731079a-ece2-4a39-a559-d5b02c30bf08/submission",
+      url: "https://www.zeemee.com/contests/standard/15f2463c-5980-4c07-b854-5a0a4b71f210/submission",
+      // url: "https://www.zaptack.com/contests/standard/e731079a-ece2-4a39-a559-d5b02c30bf08/submission",
+      isDeepLink: true,
+    },
+  },
+  {
+    offerName: "ZeeMee Instax Mini Giveaway",
+    logoName: "zeemee_logo_transparent.png",
+    title: {
+      text: "Capture the moment",
+      color: "#FFF",
+    },
+    subTitle: {
+      text: "Enter once a day to win this month’s <br />Instax giveaway",
+      color: "#FFF",
+    },
+    imageName: "instax_shadow.webp",
+    backgroundColor: "#CF361F",
+    gradiantColor: "#FDA68B",
+    itemIcon: "camera_icon.png",
+    button: {
+      title: "GIMME",
+      backgroundColor: "#FFF",
+      titleColor: "#0F1B33",
+      url: "https://www.zeemee.com/contests/standard/15f2463c-5980-4c07-b854-5a0a4b71f210/submission",
+      // url: "https://www.zaptack.com/contests/standard/e731079a-ece2-4a39-a559-d5b02c30bf08/submission",
       isDeepLink: true,
     },
   },

@@ -9,6 +9,8 @@ import zeemeeVideo from "./assets/videos/zeemee_intro_video.mp4";
 import { colors } from "./settings/theme.js";
 import { data as swiperData } from "./resources/swiper_data.js";
 
+const menuBarWidth = 70;
+
 function App() {
   //we will use this parameter later
   let backpackViewedCount = window?.BridgeApi?.getStoredInteger(
@@ -63,7 +65,10 @@ function App() {
         offer: data[step].offerName,
         order: step,
       });
+    } else {
+      window.analytics?.track("Backpack Default Screen Viewed");
     }
+
     setActiveStep(step);
   };
 
@@ -146,89 +151,105 @@ function App() {
   };
 
   const renderMenuItems = () => {
-    return (
-      <div className={getBarClassName()}>
-        <Box
-          sx={[
-            styles.prevArrrow,
-            {
-              opacity: activeStep == 0 ? 0 : 1,
-            },
-          ]}
-        >
-          {scrollX !== 0 && data && data.length > 6 && (
-            <Box
-              component="img"
-              alt="Icon"
-              sx={styles.caretLeft}
-              src={require(`./assets/images/caret_left.png`)}
-              onClick={() => {
-                slideNextPrev(
-                  -menuIconRef.current.getBoundingClientRect().width
-                );
-              }}
-            />
-          )}
-        </Box>
-        <div
-          ref={scrollRef}
-          onScroll={scrollCheck}
-          className="menu-bar"
-          style={styles.menuBar}
-        >
-          {data.map((data, index) =>
-            index != 0 ? (
+    const length = data.length;
+    if (length > 1) {
+      const borderWidth = 0.3;
+
+      //when data length is more than 6 (5 products and 1 backpack)
+      let boxWidth = menuBarWidth / 5 - borderWidth * 2;
+      //when data length is equal to or less than 6 (5 or less than 5 products and 1 backpack)
+      if (length < 6) {
+        boxWidth = menuBarWidth / (length - 1);
+        boxWidth = boxWidth - borderWidth * 2;
+      }
+      return (
+        <div className={getBarClassName()}>
+          <Box
+            sx={[
+              styles.prevArrrow,
+              {
+                opacity: activeStep == 0 ? 0 : 1,
+              },
+            ]}
+          >
+            {scrollX !== 0 && data && data.length > 6 && (
               <Box
-                key={index}
-                ref={menuIconRef}
-                className={getIconClassName(index)}
-                sx={[
-                  styles.menuIconContainer,
-                  {
-                    backgroundColor:
-                      activeStep == index ? colors.white80 : "transparent",
-                    borderLeft:
-                      activeStep == index
-                        ? `1px solid ${colors.lightGrey}`
-                        : `1px solid transparent`,
-                    borderRight:
-                      activeStep == index
-                        ? `1px solid ${colors.lightGrey}`
-                        : `1px solid transparent`,
-                    transition: "background-color 1s",
-                  },
-                ]}
-              >
+                component="img"
+                alt="Icon"
+                sx={styles.caretLeft}
+                src={require(`./assets/images/caret_left.png`)}
+                onClick={() => {
+                  slideNextPrev(
+                    -menuIconRef.current.getBoundingClientRect().width
+                  );
+                }}
+              />
+            )}
+          </Box>
+          <div
+            ref={scrollRef}
+            onScroll={scrollCheck}
+            className="menu-bar"
+            style={styles.menuBar}
+          >
+            {data.map((data, index) =>
+              index != 0 ? (
                 <Box
-                  component="img"
-                  alt="Icon"
-                  sx={styles.itemIcon}
-                  src={require(`./assets/images/${data?.itemIcon}`)}
-                  onClick={() => {
-                    handleStepChange(index);
-                  }}
-                />
-              </Box>
-            ) : null
-          )}
+                  key={index}
+                  ref={menuIconRef}
+                  className={getIconClassName(index)}
+                  sx={[
+                    styles.menuIconContainer,
+                    {
+                      minWidth: `${boxWidth}vw`,
+                      width: `${boxWidth}vw`,
+                    },
+                    {
+                      backgroundColor:
+                        activeStep == index ? colors.white80 : "transparent",
+                      borderLeft:
+                        activeStep == index
+                          ? `${borderWidth}vw solid ${colors.lightGrey}`
+                          : `${borderWidth}vw solid transparent`,
+                      borderRight:
+                        activeStep == index
+                          ? `${borderWidth}vw solid ${colors.lightGrey}`
+                          : `${borderWidth}vw solid transparent`,
+                      transition: "background-color 1s",
+                    },
+                  ]}
+                >
+                  <Box
+                    component="img"
+                    alt="Icon"
+                    sx={styles.itemIcon}
+                    src={require(`./assets/images/${data?.itemIcon}`)}
+                    onClick={() => {
+                      handleStepChange(index);
+                    }}
+                  />
+                </Box>
+              ) : null
+            )}
+          </div>
+          <Box sx={[styles.nextArrow, { opacity: activeStep == 0 ? 0 : 1 }]}>
+            {!scrolEnd && data && data.length > 6 && (
+              <Box
+                component="img"
+                alt="Right Icon"
+                sx={styles.caretLeft}
+                src={require(`./assets/images/caret_right.png`)}
+                onClick={() => {
+                  slideNextPrev(
+                    menuIconRef.current.getBoundingClientRect().width
+                  );
+                }}
+              />
+            )}
+          </Box>
         </div>
-        <Box sx={[styles.nextArrow, { opacity: activeStep == 0 ? 0 : 1 }]}>
-          {!scrolEnd && data && data.length > 6 && (
-            <Box
-              component="img"
-              alt="Right Icon"
-              sx={styles.caretLeft}
-              src={require(`./assets/images/caret_right.png`)}
-              onClick={() => {
-                slideNextPrev(
-                  menuIconRef.current.getBoundingClientRect().width
-                );
-              }}
-            />
-          )}
-        </Box>
-      </div>
-    );
+      );
+    }
   };
 
   const renderLoader = () => {
@@ -553,13 +574,11 @@ const styles = {
     alignItems: "center",
   },
   menuBar: {
-    width: "70vw",
+    width: `${menuBarWidth}vw`,
     display: "flex",
     overflowX: "auto",
   },
   menuIconContainer: {
-    minWidth: "13.5vw",
-    width: "13.5vw",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
