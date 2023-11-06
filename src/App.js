@@ -23,7 +23,9 @@ function App() {
   const [scrolEnd, setscrolEnd] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
   const [data, setData] = useState([]);
-  const [showProductData, setShowProductData] = useState(true);
+  const [showProductData, setShowProductData] = useState(
+    backpackViewedCount ? (backpackViewedCount == 0 ? false : true) : false
+  );
   const [showSpinner, setShowSpinner] = useState(true);
 
   /** identify user to analytics */
@@ -150,6 +152,7 @@ function App() {
     }
   };
 
+  /** render menu items */
   const renderMenuItems = () => {
     const length = data.length;
     if (length > 1) {
@@ -252,6 +255,7 @@ function App() {
     }
   };
 
+  /** render loader */
   const renderLoader = () => {
     return (
       <Box sx={styles.loaderContainer}>
@@ -260,6 +264,7 @@ function App() {
     );
   };
 
+  /** render animated video */
   const renderAnimation = () => {
     return (
       <>
@@ -288,6 +293,7 @@ function App() {
     );
   };
 
+  /** render animated video */
   const renderBackpackContents = () => {
     return (
       <>
