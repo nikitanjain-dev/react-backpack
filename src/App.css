@@ -40,6 +40,10 @@ body {
   display: none;
 }
 
+.menu-bar {
+  overscroll-behavior: contain;
+}
+
 .icon {
   background-color: #ffffffcc;
   opacity: 0;

@@ -12,7 +12,6 @@ import { data as swiperData } from "./resources/swiper_data.js";
 const menuBarWidth = 70;
 
 function App() {
-  //we will use this parameter later
   let backpackViewedCount = window?.BridgeApi?.getStoredInteger(
     "backpack_viewed_count"
   );
@@ -24,7 +23,7 @@ function App() {
   const [activeStep, setActiveStep] = useState(0);
   const [data, setData] = useState([]);
   const [showProductData, setShowProductData] = useState(
-    backpackViewedCount ? (backpackViewedCount == 0 ? false : true) : false
+    backpackViewedCount ? (backpackViewedCount == 0 ? false : true) : true
   );
   const [showSpinner, setShowSpinner] = useState(true);
 
