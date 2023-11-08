@@ -41,7 +41,7 @@ body {
 }
 
 .menu-bar {
-  overscroll-behavior: contain;
+  overscroll-behavior-x: contain;
 }
 
 .icon {

@@ -23,7 +23,7 @@ function App() {
   const [activeStep, setActiveStep] = useState(0);
   const [data, setData] = useState([]);
   const [showProductData, setShowProductData] = useState(
-    backpackViewedCount ? (backpackViewedCount == 0 ? false : true) : true
+    backpackViewedCount ? (backpackViewedCount == 0 ? false : true) : false
   );
   const [showSpinner, setShowSpinner] = useState(true);
 
@@ -61,6 +61,10 @@ function App() {
    * @param step Updated step
    */
   const handleStepChange = (step) => {
+    //set scroll to 0 when step is 0
+    if (step === 0) {
+      scrollRef.current.scrollLeft = 0;
+    }
     if (step > 0) {
       window.analytics?.track("Backpack Offer Viewed", {
         offer: data[step].offerName,
