@@ -37,7 +37,7 @@ function App() {
 
   /** setting data */
   useEffect(() => {
-    setData(swiperData);
+    setData(window.zeemeeData || swiperData);
   }, []);
 
   /** setting images width height data */
@@ -309,7 +309,7 @@ function App() {
                 styles.container,
                 {
                   backgroundImage: data?.backgroundColor
-                    ? `radial-gradient(circle at 50% 55%, ${data?.gradiantColor} 5% ,${data?.backgroundColor} 50%)` //#f1e3c4, #F5D38C
+                    ? `radial-gradient(circle at 50% 55%, ${data?.gradientColor} 5% ,${data?.backgroundColor} 50%)` //#f1e3c4, #F5D38C
                     : `radial-gradient(circle at 50% 55%, ${colors?.tropicalLightBlue} 5% , ${colors.tropicalDarkBlue} 50%)`,
                 },
               ]}

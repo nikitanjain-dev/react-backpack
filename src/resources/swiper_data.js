@@ -13,8 +13,8 @@ export const data = [
     },
     imageName: "bag.webp",
     backgroundColor: "#B7C8E7",
-    gradiantColor: "#FBFCFF",
-    itemIcon: null,
+    gradientColor: "#FBFCFF",
+    itemIcon: "bag.png",
     button: {
       title: "SWIPE TO OPEN",
       backgroundColor: null,
@@ -36,7 +36,7 @@ export const data = [
     },
     imageName: "books.webp",
     backgroundColor: "#F6C67E",
-    gradiantColor: "#FAEDE1",
+    gradientColor: "#FAEDE1",
     itemIcon: "book_icon.png",
     button: {
       title: "HOOK ME UP",
@@ -59,7 +59,7 @@ export const data = [
     },
     imageName: "piggy_bank.webp",
     backgroundColor: "#A0D2E2",
-    gradiantColor: "#F7FAFB",
+    gradientColor: "#F7FAFB",
     itemIcon: "scholarship_icon.png",
     button: {
       title: "KA-CHING",
@@ -83,7 +83,7 @@ export const data = [
     },
     imageName: "guitar_shadow.webp",
     backgroundColor: "#151616",
-    gradiantColor: "#6A6C6D",
+    gradientColor: "#6A6C6D",
     itemIcon: "music_note.png",
     button: {
       title: "ADMIT ONE",
@@ -106,7 +106,7 @@ export const data = [
     },
     imageName: "atlantic_shadow.webp",
     backgroundColor: "#D7D7D7",
-    gradiantColor: "#FEFDFD",
+    gradientColor: "#FEFDFD",
     itemIcon: "tickets_icon.png",
     button: {
       title: "I NEED THIS",
@@ -129,7 +129,7 @@ export const data = [
     },
     imageName: "airpods_shadow.webp",
     backgroundColor: "#8CD9C7",
-    gradiantColor: "#EAFAF6",
+    gradientColor: "#EAFAF6",
     itemIcon: "headphone_icon.png",
     button: {
       title: "I WANT IT",
@@ -153,7 +153,7 @@ export const data = [
     },
     imageName: "instax_shadow.webp",
     backgroundColor: "#CF361F",
-    gradiantColor: "#FDA68B",
+    gradientColor: "#FDA68B",
     itemIcon: "camera_icon.png",
     button: {
       title: "GIMME",
